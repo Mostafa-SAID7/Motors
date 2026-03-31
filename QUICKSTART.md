@@ -3,10 +3,35 @@
 ## 🚀 Getting Started
 
 ### 1. Start the Development Server
+
+**Option A: Using npm (Recommended)**
 ```bash
 npm start
 ```
+
+**Option B: Using Enhanced Startup Script (Handles Issues)**
+
+Windows PowerShell:
+```powershell
+.\start-dev-enhanced.ps1
+```
+
+Windows CMD:
+```cmd
+start-dev-enhanced.bat
+```
+
+**Option C: Manual ng serve**
+```bash
+ng serve --port 4200
+```
+
 The app will be available at `http://localhost:4200`
+
+**If you get ERR_CONNECTION_REFUSED:**
+1. See `DIAGNOSTIC_GUIDE.md` for complete troubleshooting
+2. Try: `.\start-dev-enhanced.ps1 -CleanStart`
+3. Or use different port: `ng serve --port 4300`
 
 ### 2. Project Structure Overview
 

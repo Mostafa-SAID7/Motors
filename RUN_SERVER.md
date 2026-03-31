@@ -10,7 +10,32 @@ npm start
 
 When prompted about analytics, press **N** and Enter to skip.
 
-### Option 2: Using ng serve directly
+### Option 2: Using Enhanced Startup Script (Recommended for Issues)
+
+**Windows PowerShell:**
+```powershell
+.\start-dev-enhanced.ps1
+```
+
+Features:
+- Automatic diagnostics
+- Port conflict detection
+- Dependency checking
+- Clean start option: `.\start-dev-enhanced.ps1 -CleanStart`
+- Custom port: `.\start-dev-enhanced.ps1 -Port 4300`
+
+**Windows CMD:**
+```cmd
+start-dev-enhanced.bat
+```
+
+Features:
+- Automatic diagnostics
+- Port conflict detection
+- Clean start: `start-dev-enhanced.bat --clean`
+- Custom port: `start-dev-enhanced.bat --port 4300`
+
+### Option 3: Using ng serve directly
 ```bash
 cd Motors
 ng serve
@@ -18,7 +43,7 @@ ng serve
 
 When prompted about analytics, press **N** and Enter to skip.
 
-### Option 3: Skip analytics prompt
+### Option 4: Skip analytics prompt
 ```bash
 cd Motors
 ng serve --poll=2000
@@ -28,7 +53,9 @@ ng serve --poll=2000
 
 ### Issue: ERR_CONNECTION_REFUSED on localhost:4200
 
-**Solution 1: Check if port 4200 is available**
+**See `DIAGNOSTIC_GUIDE.md` for complete troubleshooting steps.**
+
+Quick solutions:
 ```powershell
 # Check if port 4200 is in use
 netstat -ano | findstr :4200
