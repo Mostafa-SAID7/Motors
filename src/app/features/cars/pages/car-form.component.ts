@@ -266,15 +266,17 @@ export class CarFormComponent implements OnInit {
       if (params['id']) {
         this.isEdit.set(true);
         this.carId = params['id'];
-        const car = this.carService.getCarById(this.carId);
-        if (car) {
-          this.form.patchValue({
-            ...car,
-            images: car.images.join(', '),
-          });
-        } else {
-          this.notificationService.error('Car not found');
-          this.router.navigate(['/cars']);
+        if (this.carId) {
+          const car = this.carService.getCarById(this.carId);
+          if (car) {
+            this.form.patchValue({
+              ...car,
+              images: car.images.join(', '),
+            });
+          } else {
+            this.notificationService.error('Car not found');
+            this.router.navigate(['/cars']);
+          }
         }
       }
     });

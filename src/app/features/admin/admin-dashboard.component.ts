@@ -34,7 +34,7 @@ import { CarService } from '../../core/services/car.service';
           </div>
           <div class="bg-white rounded-lg shadow p-6">
             <p class="text-gray-600 text-sm">Revenue</p>
-            <p class="text-3xl font-bold">${{ totalRevenue() | number }}</p>
+            <p class="text-3xl font-bold">$ {{ totalRevenue() | number }}</p>
           </div>
         </div>
 
@@ -93,7 +93,7 @@ import { CarService } from '../../core/services/car.service';
                   @for (car of cars(); track car.id) {
                     <tr class="border-t hover:bg-gray-50">
                       <td class="px-6 py-4">{{ car.brand }} {{ car.model }}</td>
-                      <td class="px-6 py-4">${{ car.price | number }}</td>
+                      <td class="px-6 py-4">$ {{ car.price | number }}</td>
                       <td class="px-6 py-4">{{ car.condition | uppercase }}</td>
                       <td class="px-6 py-4">{{ car.rating }}/5</td>
                       <td class="px-6 py-4">
@@ -166,7 +166,7 @@ import { CarService } from '../../core/services/car.service';
                           {{ booking.status | uppercase }}
                         </span>
                       </td>
-                      <td class="px-6 py-4">${{ booking.totalPrice | number }}</td>
+                      <td class="px-6 py-4">$ {{ booking.totalPrice | number }}</td>
                     </tr>
                   }
                 </tbody>

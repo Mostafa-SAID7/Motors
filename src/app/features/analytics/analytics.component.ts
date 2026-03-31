@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
       <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
         <div class="bg-white rounded-lg shadow p-6">
           <p class="text-gray-600 text-sm">Total Revenue</p>
-          <p class="text-3xl font-bold">${{ totalRevenue() | number }}</p>
+          <p class="text-3xl font-bold">$ {{ totalRevenue() | number }}</p>
           <p class="text-green-600 text-sm mt-2">↑ 12% from last month</p>
         </div>
         <div class="bg-white rounded-lg shadow p-6">
@@ -43,7 +43,7 @@ import { CommonModule } from '@angular/common';
               <div>
                 <div class="flex justify-between mb-1">
                   <span class="text-sm font-semibold">{{ month.name }}</span>
-                  <span class="text-sm">${{ month.revenue | number }}</span>
+                  <span class="text-sm">$ {{ month.revenue | number }}</span>
                 </div>
                 <div class="w-full bg-gray-200 rounded-full h-2">
                   <div
@@ -103,7 +103,7 @@ import { CommonModule } from '@angular/common';
                 <tr class="border-t hover:bg-gray-50">
                   <td class="px-6 py-4">{{ car.name }}</td>
                   <td class="px-6 py-4">{{ car.bookings }}</td>
-                  <td class="px-6 py-4">${{ car.revenue | number }}</td>
+                  <td class="px-6 py-4">$ {{ car.revenue | number }}</td>
                   <td class="px-6 py-4">{{ car.rating }}/5</td>
                 </tr>
               }

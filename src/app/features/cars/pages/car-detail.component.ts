@@ -101,7 +101,7 @@ import { SkeletonLoaderComponent } from '../../../components/skeleton-loader/ske
               <!-- Price -->
               <div class="glass-effect rounded-2xl p-5">
                 <p class="text-slate-400 text-sm mb-1">السعر</p>
-                <p class="text-5xl font-black gradient-text">\${{ car()!.price | number }}</p>
+                <p class="text-5xl font-black gradient-text">$ {{ car()!.price | number }}</p>
               </div>
 
               <!-- Specs Grid -->
@@ -254,9 +254,11 @@ export class CarDetailComponent implements OnInit {
       this.isLoading.set(true);
       // Small tick to allow mock data signal to settle
       setTimeout(() => {
-        const foundCar = this.carService.getCarById(id);
-        this.car.set(foundCar);
-        this.isFavorite.set(this.carService.isFavorite(id));
+        if (id) {
+          const foundCar = this.carService.getCarById(id);
+          this.car.set(foundCar);
+          this.isFavorite.set(this.carService.isFavorite(id));
+        }
         this.isLoading.set(false);
       }, 300);
     });

@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, computed } from '@angular/core';
+import { Component, Output, EventEmitter, computed, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
       <div class="flex items-center gap-2">
         <label class="text-sm text-gray-600">Items per page:</label>
         <select
-          [value]="itemsPerPage"
+          [value]="itemsPerPage()"
           (change)="onItemsPerPageChange($event)"
           class="px-3 py-1 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500"
         >
@@ -24,14 +24,14 @@ import { CommonModule } from '@angular/common';
 
       <!-- Pagination Info -->
       <div class="text-sm text-gray-600">
-        Showing {{ startItem }} to {{ endItem }} of {{ totalItems }} items
+        Showing {{ startItem() }} to {{ endItem() }} of {{ totalItems() }} items
       </div>
 
       <!-- Pagination Controls -->
       <div class="flex gap-2">
         <button
           (click)="previousPage()"
-          [disabled]="currentPage === 1"
+          [disabled]="currentPage() === 1"
           class="px-3 py-1 border border-gray-300 rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition"
         >
           ← Previous
@@ -39,12 +39,12 @@ import { CommonModule } from '@angular/common';
 
         <!-- Page Numbers -->
         <div class="flex gap-1">
-          @for (page of pageNumbers; track page) {
+          @for (page of pageNumbers(); track page) {
             <button
               (click)="goToPage(page)"
-              [class.bg-blue-600]="page === currentPage"
-              [class.text-white]="page === currentPage"
-              [class.border-blue-600]="page === currentPage"
+              [class.bg-blue-600]="page === currentPage()"
+              [class.text-white]="page === currentPage()"
+              [class.border-blue-600]="page === currentPage()"
               class="px-3 py-1 border border-gray-300 rounded-lg hover:bg-gray-100 transition"
             >
               {{ page }}
@@ -54,7 +54,7 @@ import { CommonModule } from '@angular/common';
 
         <button
           (click)="nextPage()"
-          [disabled]="currentPage === totalPages"
+          [disabled]="currentPage() === totalPages()"
           class="px-3 py-1 border border-gray-300 rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition"
         >
           Next →
@@ -64,15 +64,15 @@ import { CommonModule } from '@angular/common';
   `,
 })
 export class PaginationComponent {
-  @Input() totalItems: number = 0;
-  @Input() itemsPerPage: number = 6;
-  @Input() currentPage: number = 1;
+  totalItems = input<number>(0);
+  itemsPerPage = input<number>(6);
+  currentPage = input<number>(1);
   @Output() pageChange = new EventEmitter<number>();
   @Output() itemsPerPageChange = new EventEmitter<number>();
 
-  totalPages = computed(() => Math.ceil(this.totalItems / this.itemsPerPage));
-  startItem = computed(() => (this.currentPage - 1) * this.itemsPerPage + 1);
-  endItem = computed(() => Math.min(this.currentPage * this.itemsPerPage, this.totalItems));
+  totalPages = computed(() => Math.ceil(this.totalItems() / this.itemsPerPage()));
+  startItem = computed(() => (this.currentPage() - 1) * this.itemsPerPage() + 1);
+  endItem = computed(() => Math.min(this.currentPage() * this.itemsPerPage(), this.totalItems()));
 
   pageNumbers = computed(() => {
     const pages: number[] = [];
@@ -84,7 +84,7 @@ export class PaginationComponent {
         pages.push(i);
       }
     } else {
-      const current = this.currentPage;
+      const current = this.currentPage();
       const start = Math.max(1, current - 2);
       const end = Math.min(total, current + 2);
 
@@ -103,14 +103,14 @@ export class PaginationComponent {
   });
 
   previousPage(): void {
-    if (this.currentPage > 1) {
-      this.pageChange.emit(this.currentPage - 1);
+    if (this.currentPage() > 1) {
+      this.pageChange.emit(this.currentPage() - 1);
     }
   }
 
   nextPage(): void {
-    if (this.currentPage < this.totalPages()) {
-      this.pageChange.emit(this.currentPage + 1);
+    if (this.currentPage() < this.totalPages()) {
+      this.pageChange.emit(this.currentPage() + 1);
     }
   }
 

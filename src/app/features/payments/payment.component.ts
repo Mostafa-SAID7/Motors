@@ -114,19 +114,19 @@ import { NotificationService } from '../../core/services/notification.service';
               <div class="space-y-4 mb-6">
                 <div class="flex justify-between">
                   <span class="text-gray-600">Subtotal</span>
-                  <span>${{ subtotal() | number }}</span>
+                  <span>$ {{ subtotal() | number }}</span>
                 </div>
                 <div class="flex justify-between">
                   <span class="text-gray-600">Tax (10%)</span>
-                  <span>${{ tax() | number }}</span>
+                  <span>$ {{ tax() | number }}</span>
                 </div>
                 <div class="flex justify-between">
                   <span class="text-gray-600">Booking Fee</span>
-                  <span>${{ bookingFee() | number }}</span>
+                  <span>$ {{ bookingFee() | number }}</span>
                 </div>
                 <div class="border-t pt-4 flex justify-between font-bold text-lg">
                   <span>Total</span>
-                  <span class="text-blue-600">${{ total() | number }}</span>
+                  <span class="text-blue-600">$ {{ total() | number }}</span>
                 </div>
               </div>
 

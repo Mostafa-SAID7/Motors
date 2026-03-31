@@ -87,7 +87,7 @@ import { Car } from '../../core/models/car.model';
         <!-- Price and Action -->
         <div class="mt-auto space-y-3">
           <div class="text-3xl font-bold bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
-            ${{ car.price | number }}
+            $ {{ car.price | number }}
           </div>
           <div class="flex gap-2">
             <button

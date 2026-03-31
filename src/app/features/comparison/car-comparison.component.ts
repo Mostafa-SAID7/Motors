@@ -25,7 +25,8 @@ import { CarService } from '../../core/services/car.service';
               <tr class="bg-gray-100">
                 <th class="border p-4 text-left font-semibold">Feature</th>
                 @for (carId of comparisonList(); track carId) {
-                  @if (getCarById(carId) as car) {
+                  @let car = getCarById(carId);
+                  @if (car) {
                     <th class="border p-4 text-center">
                       <div class="mb-4">
                         <img [src]="car.images[0]" alt="Car" class="w-full h-32 object-cover rounded mb-2" />
@@ -48,8 +49,9 @@ import { CarService } from '../../core/services/car.service';
               <tr class="border-b hover:bg-gray-50">
                 <td class="border p-4 font-semibold">Price</td>
                 @for (carId of comparisonList(); track carId) {
-                  @if (getCarById(carId) as car) {
-                    <td class="border p-4 text-center">${{ car.price | number }}</td>
+                  @let car = getCarById(carId);
+                  @if (car) {
+                    <td class="border p-4 text-center">$ {{ car.price | number }}</td>
                   }
                 }
               </tr>
@@ -58,7 +60,8 @@ import { CarService } from '../../core/services/car.service';
               <tr class="border-b hover:bg-gray-50">
                 <td class="border p-4 font-semibold">Year</td>
                 @for (carId of comparisonList(); track carId) {
-                  @if (getCarById(carId) as car) {
+                  @let car = getCarById(carId);
+                  @if (car) {
                     <td class="border p-4 text-center">{{ car.year }}</td>
                   }
                 }
@@ -68,7 +71,8 @@ import { CarService } from '../../core/services/car.service';
               <tr class="border-b hover:bg-gray-50">
                 <td class="border p-4 font-semibold">Condition</td>
                 @for (carId of comparisonList(); track carId) {
-                  @if (getCarById(carId) as car) {
+                  @let car = getCarById(carId);
+                  @if (car) {
                     <td class="border p-4 text-center">{{ car.condition | uppercase }}</td>
                   }
                 }
@@ -78,7 +82,8 @@ import { CarService } from '../../core/services/car.service';
               <tr class="border-b hover:bg-gray-50">
                 <td class="border p-4 font-semibold">Mileage</td>
                 @for (carId of comparisonList(); track carId) {
-                  @if (getCarById(carId) as car) {
+                  @let car = getCarById(carId);
+                  @if (car) {
                     <td class="border p-4 text-center">{{ car.mileage | number }} miles</td>
                   }
                 }
@@ -88,7 +93,8 @@ import { CarService } from '../../core/services/car.service';
               <tr class="border-b hover:bg-gray-50">
                 <td class="border p-4 font-semibold">Transmission</td>
                 @for (carId of comparisonList(); track carId) {
-                  @if (getCarById(carId) as car) {
+                  @let car = getCarById(carId);
+                  @if (car) {
                     <td class="border p-4 text-center">{{ car.transmission }}</td>
                   }
                 }
@@ -98,7 +104,8 @@ import { CarService } from '../../core/services/car.service';
               <tr class="border-b hover:bg-gray-50">
                 <td class="border p-4 font-semibold">Fuel Type</td>
                 @for (carId of comparisonList(); track carId) {
-                  @if (getCarById(carId) as car) {
+                  @let car = getCarById(carId);
+                  @if (car) {
                     <td class="border p-4 text-center">{{ car.fuelType }}</td>
                   }
                 }
@@ -108,7 +115,8 @@ import { CarService } from '../../core/services/car.service';
               <tr class="border-b hover:bg-gray-50">
                 <td class="border p-4 font-semibold">Engine Size</td>
                 @for (carId of comparisonList(); track carId) {
-                  @if (getCarById(carId) as car) {
+                  @let car = getCarById(carId);
+                  @if (car) {
                     <td class="border p-4 text-center">{{ car.engineSize }}</td>
                   }
                 }
@@ -118,7 +126,8 @@ import { CarService } from '../../core/services/car.service';
               <tr class="border-b hover:bg-gray-50">
                 <td class="border p-4 font-semibold">Color</td>
                 @for (carId of comparisonList(); track carId) {
-                  @if (getCarById(carId) as car) {
+                  @let car = getCarById(carId);
+                  @if (car) {
                     <td class="border p-4 text-center">{{ car.color }}</td>
                   }
                 }
@@ -128,7 +137,8 @@ import { CarService } from '../../core/services/car.service';
               <tr class="border-b hover:bg-gray-50">
                 <td class="border p-4 font-semibold">Rating</td>
                 @for (carId of comparisonList(); track carId) {
-                  @if (getCarById(carId) as car) {
+                  @let car = getCarById(carId);
+                  @if (car) {
                     <td class="border p-4 text-center">
                       <span class="text-yellow-400">★</span> {{ car.rating }}/5
                     </td>
@@ -140,7 +150,8 @@ import { CarService } from '../../core/services/car.service';
               <tr>
                 <td class="border p-4"></td>
                 @for (carId of comparisonList(); track carId) {
-                  @if (getCarById(carId) as car) {
+                  @let car = getCarById(carId);
+                  @if (car) {
                     <td class="border p-4 text-center">
                       <a
                         [routerLink]="['/cars', car.id]"

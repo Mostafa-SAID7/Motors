@@ -161,7 +161,7 @@ type ViewMode = 'card' | 'table';
                   <td class="px-4 py-4 text-center text-slate-300 hidden md:table-cell">{{ car.year }}</td>
 
                   <td class="px-4 py-4 text-center">
-                    <span class="font-bold text-blue-400">\${{ car.price | number }}</span>
+                    <span class="font-bold text-blue-400">$ {{ car.price | number }}</span>
                   </td>
 
                   <td class="px-4 py-4 text-center hidden lg:table-cell">

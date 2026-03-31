@@ -1,6 +1,5 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 
 export interface UserProfile {
@@ -17,7 +16,7 @@ export interface UserProfile {
 @Component({
   selector: 'app-user-management',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule],
   template: `
     <div class="container mx-auto px-4 py-12">
       <h1 class="text-4xl font-bold mb-8">User Management</h1>

@@ -127,7 +127,7 @@ import { Car } from '../../core/models/car.model';
                   {{ car.condition === 'new' ? 'جديد' : 'مستعمل' }}
                 </span>
                 <!-- Price -->
-                <div class="featured-price">\${{ car.price | number }}</div>
+                <div class="featured-price">$ {{ car.price | number }}</div>
               </div>
 
               <!-- Info -->

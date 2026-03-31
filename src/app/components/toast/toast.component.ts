@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NotificationService } from '../../core/services/notification.service';
 import { trigger, transition, style, animate } from '@angular/animations';
@@ -55,12 +55,11 @@ import { trigger, transition, style, animate } from '@angular/animations';
     ]),
   ],
 })
-export class ToastComponent implements OnInit {
-  notifications = this.notificationService.getNotifications;
+export class ToastComponent {
+  private notificationService = inject(NotificationService);
+  notifications = this.notificationService.getNotifications();
 
-  constructor(private notificationService: NotificationService) {}
-
-  ngOnInit(): void {}
+  constructor() {}
 
   remove(id: string): void {
     this.notificationService.remove(id);

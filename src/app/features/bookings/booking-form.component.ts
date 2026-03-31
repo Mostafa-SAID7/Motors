@@ -22,13 +22,13 @@ import { NotificationService } from '../../core/services/notification.service';
               <img [src]="car()!.images[0]" alt="Car" class="w-full h-48 object-cover rounded-lg mb-4" />
               <h3 class="text-xl font-bold mb-2">{{ car()!.brand }} {{ car()!.model }}</h3>
               <p class="text-gray-600 mb-4">{{ car()!.year }} • {{ car()!.condition | uppercase }}</p>
-              <div class="text-3xl font-bold text-blue-600 mb-6">${{ car()!.price | number }}</div>
+              <div class="text-3xl font-bold text-blue-600 mb-6">$ {{ car()!.price | number }}</div>
 
               <!-- Booking Summary -->
               <div class="bg-gray-50 rounded-lg p-4 space-y-2">
                 <div class="flex justify-between">
                   <span class="text-gray-600">Daily Rate:</span>
-                  <span class="font-semibold">${{ dailyRate() | number }}</span>
+                  <span class="font-semibold">$ {{ dailyRate() | number }}</span>
                 </div>
                 <div class="flex justify-between">
                   <span class="text-gray-600">Days:</span>
@@ -36,7 +36,7 @@ import { NotificationService } from '../../core/services/notification.service';
                 </div>
                 <div class="border-t pt-2 flex justify-between">
                   <span class="font-bold">Total:</span>
-                  <span class="font-bold text-lg text-blue-600">${{ totalPrice() | number }}</span>
+                  <span class="font-bold text-lg text-blue-600">$ {{ totalPrice() | number }}</span>
                 </div>
               </div>
             </div>
@@ -171,10 +171,12 @@ export class BookingFormComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.carId = params['id'];
-      const car = this.carService.getCarById(this.carId);
-      if (car) {
-        this.car.set(car);
-        this.dailyRate.set(Math.ceil(car.price / 30));
+      if (this.carId) {
+        const car = this.carService.getCarById(this.carId);
+        if (car) {
+          this.car.set(car);
+          this.dailyRate.set(Math.ceil(car.price / 30));
+        }
       }
     });
 
