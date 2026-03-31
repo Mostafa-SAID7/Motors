@@ -9,11 +9,20 @@ import { FooterComponent } from './footer/footer.component';
   standalone: true,
   imports: [CommonModule, RouterOutlet, HeaderComponent, FooterComponent],
   template: `
-    <app-header></app-header>
-    <main class="min-h-screen">
-      <router-outlet></router-outlet>
-    </main>
-    <app-footer></app-footer>
+    <div class="min-h-screen flex flex-col relative w-full" dir="rtl">
+      <!-- Fixed Header for persistence -->
+      <app-header class="sticky top-0 z-50"></app-header>
+      
+      <main class="flex-grow w-full relative z-10 pt-10 overflow-y-auto">
+        <!-- Content Wrapper -->
+        <div class="animate-fadeInUp w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <router-outlet></router-outlet>
+        </div>
+      </main>
+
+      <!-- Minimalist Footer -->
+      <app-footer></app-footer>
+    </div>
   `,
 })
 export class LayoutComponent {}

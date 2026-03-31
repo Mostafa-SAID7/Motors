@@ -8,149 +8,153 @@ import { FilterOptions, SortOptions } from '../../core/services/car.service';
   standalone: true,
   imports: [CommonModule, FormsModule],
   template: `
-    <div class="bg-white rounded-lg shadow-md p-6 space-y-6">
+    <div class="card p-8 border-glow font-body">
       <!-- Search Bar -->
-      <div>
-        <label class="block text-sm font-medium text-gray-700 mb-2">Search</label>
-        <input
-          type="text"
-          [(ngModel)]="searchTerm"
-          (input)="onSearchChange()"
-          placeholder="Search by brand, model, or description..."
-          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-        />
+      <div class="space-y-3 mb-8">
+        <label class="text-xs font-black text-muted-foreground uppercase tracking-widest mr-1">ابحث عن سيارة</label>
+        <div class="relative">
+          <input
+            type="text"
+            [(ngModel)]="searchTerm"
+            (input)="onSearchChange()"
+            placeholder="ابحث عن الماركة، الموديل، أو المواصفات..."
+            class="w-full input pr-12"
+          />
+          <span class="absolute inset-y-0 right-4 flex items-center text-muted-foreground opacity-50">🔍</span>
+        </div>
       </div>
 
       <!-- Filters Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <!-- Brand Filter -->
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-2">Brand</label>
+        <div class="space-y-2">
+          <label class="text-[10px] font-black text-muted-foreground uppercase tracking-widest mr-1">الماركة</label>
           <select
             [(ngModel)]="filters.brand"
             (change)="onFilterChange()"
-            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            class="w-full input"
           >
-            <option value="">All Brands</option>
-            <option value="BMW">BMW</option>
-            <option value="Mercedes-Benz">Mercedes-Benz</option>
-            <option value="Audi">Audi</option>
-            <option value="Toyota">Toyota</option>
-            <option value="Honda">Honda</option>
-            <option value="Volkswagen">Volkswagen</option>
+            <option value="">جميع الماركات</option>
+            <option value="BMW">بي إم دبليو (BMW)</option>
+            <option value="Mercedes-Benz">مرسيدس بنز (Mercedes-Benz)</option>
+            <option value="Audi">أودي (Audi)</option>
+            <option value="Toyota">تويوتا (Toyota)</option>
+            <option value="Honda">هوندا (Honda)</option>
+            <option value="Volkswagen">فولكس واجن (Volkswagen)</option>
           </select>
         </div>
 
         <!-- Condition Filter -->
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-2">Condition</label>
+        <div class="space-y-2">
+          <label class="text-[10px] font-black text-muted-foreground uppercase tracking-widest mr-1">حالة السيارة</label>
           <select
             [(ngModel)]="filters.condition"
             (change)="onFilterChange()"
-            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            class="w-full input"
           >
-            <option value="">All Conditions</option>
-            <option value="new">New</option>
-            <option value="used">Used</option>
+            <option value="">جميع الحالات</option>
+            <option value="new">جديدة</option>
+            <option value="used">مستعملة</option>
           </select>
         </div>
 
         <!-- Fuel Type Filter -->
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-2">Fuel Type</label>
+        <div class="space-y-2">
+          <label class="text-[10px] font-black text-muted-foreground uppercase tracking-widest mr-1">نوع الوقود</label>
           <select
             [(ngModel)]="filters.fuelType"
             (change)="onFilterChange()"
-            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            class="w-full input"
           >
-            <option value="">All Fuel Types</option>
-            <option value="Petrol">Petrol</option>
-            <option value="Diesel">Diesel</option>
-            <option value="Hybrid">Hybrid</option>
+            <option value="">جميع أنواع الوقود</option>
+            <option value="Petrol">بنزين</option>
+            <option value="Diesel">ديزل</option>
+            <option value="Hybrid">هجين (Hybrid)</option>
+            <option value="Electric">كهربائية</option>
           </select>
         </div>
 
         <!-- Transmission Filter -->
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-2">Transmission</label>
+        <div class="space-y-2">
+          <label class="text-[10px] font-black text-muted-foreground uppercase tracking-widest mr-1">ناقل الحركة</label>
           <select
             [(ngModel)]="filters.transmission"
             (change)="onFilterChange()"
-            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            class="w-full input"
           >
-            <option value="">All Transmissions</option>
-            <option value="Automatic">Automatic</option>
-            <option value="Manual">Manual</option>
+            <option value="">جميع النواقل</option>
+            <option value="Automatic">أوتوماتيك</option>
+            <option value="Manual">يدوي (Manual)</option>
           </select>
         </div>
 
         <!-- Min Price -->
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-2">Min Price ($)</label>
+        <div class="space-y-2">
+          <label class="text-[10px] font-black text-muted-foreground uppercase tracking-widest mr-1">السعر الأدنى (ر.س)</label>
           <input
             type="number"
             [(ngModel)]="filters.minPrice"
             (change)="onFilterChange()"
             placeholder="0"
-            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            class="w-full input"
           />
         </div>
 
         <!-- Max Price -->
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-2">Max Price ($)</label>
+        <div class="space-y-2">
+          <label class="text-[10px] font-black text-muted-foreground uppercase tracking-widest mr-1">السعر الأعلى (ر.س)</label>
           <input
             type="number"
             [(ngModel)]="filters.maxPrice"
             (change)="onFilterChange()"
-            placeholder="999999"
-            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            placeholder="999,999"
+            class="w-full input"
           />
         </div>
       </div>
 
       <!-- Sort Options -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-2">Sort By</label>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 pt-8 border-t border-border/50">
+        <div class="space-y-2">
+          <label class="text-[10px] font-black text-muted-foreground uppercase tracking-widest mr-1">فرز حسب</label>
           <select
             [(ngModel)]="sortField"
             (change)="onSortChange()"
-            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            class="w-full input"
           >
-            <option value="price">Price</option>
-            <option value="year">Year</option>
-            <option value="mileage">Mileage</option>
-            <option value="brand">Brand</option>
+            <option value="price">السعر</option>
+            <option value="year">السنة</option>
+            <option value="mileage">المسافة المقطوعة</option>
+            <option value="brand">الماركة</option>
           </select>
         </div>
 
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-2">Order</label>
+        <div class="space-y-2">
+          <label class="text-[10px] font-black text-muted-foreground uppercase tracking-widest mr-1">الترتيب</label>
           <select
             [(ngModel)]="sortDirection"
             (change)="onSortChange()"
-            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            class="w-full input"
           >
-            <option value="asc">Ascending</option>
-            <option value="desc">Descending</option>
+            <option value="asc">تصاعدي</option>
+            <option value="desc">تنازلي</option>
           </select>
         </div>
       </div>
 
       <!-- Action Buttons -->
-      <div class="flex gap-4">
+      <div class="flex gap-4 pt-6">
         <button
           (click)="resetFilters()"
-          class="flex-1 px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition font-medium"
+          class="flex-1 btn btn-secondary py-3.5 border border-border text-xs font-black uppercase tracking-widest"
         >
-          Reset Filters
+          إعادة تعيين
         </button>
         <button
           (click)="applyFilters()"
-          class="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium"
+          class="flex-1 btn btn-primary py-3.5 text-xs font-black uppercase tracking-widest shadow-glow"
         >
-          Apply Filters
+          تطبيق الفلاتر
         </button>
       </div>
     </div>

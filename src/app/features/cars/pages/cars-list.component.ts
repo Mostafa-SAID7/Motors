@@ -25,34 +25,38 @@ type ViewMode = 'card' | 'table';
     SkeletonLoaderComponent,
   ],
   template: `
-    <div class="container mx-auto px-6 py-10 animate-fadeInUp">
+    <div class="focused-page-container font-body">
 
       <!-- ── Page Header ───────────────────────────────────────────── -->
-      <div class="flex flex-wrap items-center justify-between gap-4 mb-8">
-        <div>
-          <h1 class="text-4xl font-black mb-1">🚗 معرض السيارات</h1>
-          <p class="text-slate-400">
-            {{ filteredCars().length | number }} سيارة متاحة
+      <div class="flex flex-wrap items-end justify-between gap-6 mb-12 w-full">
+        <div class="space-y-2">
+          <h1 class="text-5xl font-black font-display text-gradient">معرض السيارات</h1>
+          <p class="text-muted-foreground font-medium uppercase tracking-widest text-xs">
+            {{ filteredCars().length | number }} سيارة متاحة في المعرض حالياً
             @if (isUsingInsForge()) {
-              <span class="badge-cinematic text-green-400 text-xs px-2 py-0.5 rounded-full mr-2">🔴 مباشر</span>
+              <span class="inline-block px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] font-black mr-2 border border-primary/20">🔴 مباشر</span>
             }
           </p>
         </div>
 
-        <div class="flex items-center gap-3">
+        <div class="flex items-center gap-4">
           <!-- View Toggle -->
-          <div class="flex items-center glass-effect rounded-xl p-1">
+          <div class="flex items-center bg-secondary/50 rounded-xl p-1 border border-border/50">
             <button id="btn-card-view"
               (click)="setView('card')"
-              class="view-toggle-btn"
-              [class.active]="viewMode() === 'card'"
+              class="w-10 h-10 flex items-center justify-center rounded-lg transition-all"
+              [class.bg-primary]="viewMode() === 'card'"
+              [class.text-white]="viewMode() === 'card'"
+              [class.text-muted-foreground]="viewMode() !== 'card'"
               title="عرض البطاقات">
               ⊞
             </button>
             <button id="btn-table-view"
               (click)="setView('table')"
-              class="view-toggle-btn"
-              [class.active]="viewMode() === 'table'"
+              class="w-10 h-10 flex items-center justify-center rounded-lg transition-all"
+              [class.bg-primary]="viewMode() === 'table'"
+              [class.text-white]="viewMode() === 'table'"
+              [class.text-muted-foreground]="viewMode() !== 'table'"
               title="عرض الجدول">
               ☰
             </button>
@@ -60,14 +64,14 @@ type ViewMode = 'card' | 'table';
 
           <!-- Add Car -->
           <a id="btn-add-car" routerLink="/cars/add"
-            class="btn btn-primary px-5 py-2.5 rounded-xl flex items-center gap-2 font-semibold">
+            class="btn btn-primary px-6 py-3 rounded-xl flex items-center gap-2 text-xs font-black uppercase tracking-widest shadow-glow">
             <span>+ أضف سيارة</span>
           </a>
         </div>
       </div>
 
       <!-- ── Filters ────────────────────────────────────────────────── -->
-      <div class="mb-8">
+      <div class="mb-12 w-full">
         <app-search-filter
           (searchChange)="onSearchChange($event)"
           (filterChange)="onFilterChange($event)"
@@ -77,13 +81,16 @@ type ViewMode = 'card' | 'table';
 
       <!-- ── Favorites Banner ───────────────────────────────────────── -->
       @if (showFavoritesOnly()) {
-        <div class="mb-6 glass-effect rounded-xl px-5 py-4 flex items-center justify-between border-blue-500/30">
-          <div>
-            <p class="font-bold text-blue-300">❤️ عرض المفضلة فقط</p>
-            <p class="text-sm text-slate-400">{{ favoriteCount() }} سيارة في مفضلتك</p>
+        <div class="mb-8 card p-6 border-primary/30 bg-primary/5 flex items-center justify-between w-full">
+          <div class="flex items-center gap-4">
+            <div class="text-3xl">❤️</div>
+            <div>
+              <p class="font-black text-foreground font-display">عرض المفضلة فقط</p>
+              <p class="text-xs text-muted-foreground font-bold uppercase tracking-widest">{{ favoriteCount() }} سيارة في قائمتك المفضلة</p>
+            </div>
           </div>
           <button (click)="toggleFavoritesOnly()"
-            class="btn btn-secondary px-4 py-2 rounded-lg text-sm">
+            class="btn btn-secondary px-6 py-2 rounded-lg text-xs font-black uppercase tracking-widest border border-border">
             عرض الكل
           </button>
         </div>
@@ -91,17 +98,19 @@ type ViewMode = 'card' | 'table';
 
       <!-- ── Loading ────────────────────────────────────────────────── -->
       @if (isLoading()) {
-        <app-skeleton-loader type="card" [count]="6"></app-skeleton-loader>
+        <div class="w-full">
+          <app-skeleton-loader type="card" [count]="6"></app-skeleton-loader>
+        </div>
       }
 
       <!-- ── Empty State ────────────────────────────────────────────── -->
       @if (!isLoading() && paginatedCars().length === 0) {
-        <div class="text-center py-24">
-          <div class="text-7xl mb-6">🔍</div>
-          <h3 class="text-2xl font-bold mb-2">لا توجد سيارات</h3>
-          <p class="text-slate-400 mb-6">لم يتم العثور على سيارات تطابق بحثك</p>
+        <div class="card p-24 text-center w-full max-w-2xl mx-auto flex flex-col items-center">
+          <div class="text-7xl mb-8 opacity-20">🔍</div>
+          <h3 class="text-3xl font-black mb-2 font-display">لم يتم العثور على نتائج</h3>
+          <p class="text-muted-foreground mb-10 font-medium">لم نجد أي سيارات تتطابق مع معايير البحث الحالية</p>
           <button (click)="resetFilters()"
-            class="btn btn-primary px-8 py-3 rounded-xl">
+            class="btn btn-primary px-10 py-4 rounded-xl text-xs font-black uppercase tracking-[0.2em] shadow-glow">
             إعادة تعيين الفلاتر
           </button>
         </div>
@@ -111,7 +120,7 @@ type ViewMode = 'card' | 'table';
       <!-- CARD VIEW                                                    -->
       <!-- ═══════════════════════════════════════════════════════════ -->
       @if (!isLoading() && paginatedCars().length > 0 && viewMode() === 'card') {
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12 w-full">
           @for (car of paginatedCars(); track car.id) {
             <app-car-card
               [car]="car"
@@ -127,122 +136,128 @@ type ViewMode = 'card' | 'table';
       <!-- TABLE VIEW                                                   -->
       <!-- ═══════════════════════════════════════════════════════════ -->
       @if (!isLoading() && paginatedCars().length > 0 && viewMode() === 'table') {
-        <div class="glass-effect rounded-2xl overflow-hidden mb-8">
-          <table class="w-full text-sm">
-            <thead>
-              <tr class="border-b border-slate-700 bg-slate-800/60">
-                <th class="text-right px-5 py-4 font-bold text-slate-300">السيارة</th>
-                <th class="text-center px-4 py-4 font-bold text-slate-300 hidden md:table-cell">السنة</th>
-                <th class="text-center px-4 py-4 font-bold text-slate-300">السعر</th>
-                <th class="text-center px-4 py-4 font-bold text-slate-300 hidden lg:table-cell">الحالة</th>
-                <th class="text-center px-4 py-4 font-bold text-slate-300 hidden lg:table-cell">الوقود</th>
-                <th class="text-center px-4 py-4 font-bold text-slate-300 hidden xl:table-cell">المسافة</th>
-                <th class="text-center px-4 py-4 font-bold text-slate-300 hidden md:table-cell">التقييم</th>
-                <th class="text-center px-4 py-4 font-bold text-slate-300">إجراءات</th>
-              </tr>
-            </thead>
-            <tbody>
-              @for (car of paginatedCars(); track car.id; let even = $even) {
-                <tr class="table-row-item border-b border-slate-700/50"
-                    [class.bg-slate-800/20]="even">
-                  <!-- Car Name + Image -->
-                  <td class="px-5 py-4">
-                    <div class="flex items-center gap-3">
-                      <img [src]="car.images[0]"
-                           [alt]="car.brand"
-                           class="w-14 h-10 object-cover rounded-lg flex-shrink-0" />
-                      <div>
-                        <p class="font-bold text-white">{{ car.brand }} {{ car.model }}</p>
-                        <p class="text-xs text-slate-400">{{ car.color }}</p>
-                      </div>
-                    </div>
-                  </td>
-
-                  <td class="px-4 py-4 text-center text-slate-300 hidden md:table-cell">{{ car.year }}</td>
-
-                  <td class="px-4 py-4 text-center">
-                    <span class="font-bold text-blue-400">$ {{ car.price | number }}</span>
-                  </td>
-
-                  <td class="px-4 py-4 text-center hidden lg:table-cell">
-                    <span class="px-2 py-1 rounded-full text-xs font-bold"
-                          [class.bg-green-500/20]="car.condition === 'new'"
-                          [class.text-green-400]="car.condition === 'new'"
-                          [class.bg-orange-500/20]="car.condition === 'used'"
-                          [class.text-orange-400]="car.condition === 'used'">
-                      {{ car.condition === 'new' ? 'جديد' : 'مستعمل' }}
-                    </span>
-                  </td>
-
-                  <td class="px-4 py-4 text-center text-slate-300 hidden lg:table-cell">{{ car.fuelType }}</td>
-
-                  <td class="px-4 py-4 text-center text-slate-300 hidden xl:table-cell">
-                    {{ car.mileage | number }} km
-                  </td>
-
-                  <td class="px-4 py-4 text-center hidden md:table-cell">
-                    <div class="flex items-center justify-center gap-1 text-yellow-400">
-                      <span>★</span>
-                      <span class="text-white font-semibold">{{ car.rating || '—' }}</span>
-                    </div>
-                  </td>
-
-                  <td class="px-4 py-4">
-                    <div class="flex items-center justify-center gap-2">
-                      <a [routerLink]="['/cars', car.id]"
-                        class="icon-btn text-blue-400" title="عرض">👁️</a>
-                      <a [routerLink]="['/cars', car.id, 'edit']"
-                        class="icon-btn text-slate-300" title="تعديل">✏️</a>
-                      <button (click)="toggleFavorite(car.id)"
-                        class="icon-btn"
-                        [class.text-red-400]="carService.isFavorite(car.id)"
-                        [class.text-slate-400]="!carService.isFavorite(car.id)"
-                        title="مفضلة">
-                        {{ carService.isFavorite(car.id) ? '❤️' : '🤍' }}
-                      </button>
-                    </div>
-                  </td>
+        <div class="card p-0 overflow-hidden mb-12 w-full">
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="bg-secondary/40 border-b border-border">
+                  <th class="text-right px-8 py-5 text-xs font-black text-muted-foreground uppercase tracking-widest">السيارة</th>
+                  <th class="text-center px-4 py-5 text-xs font-black text-muted-foreground uppercase tracking-widest hidden md:table-cell">السنة</th>
+                  <th class="text-center px-4 py-5 text-xs font-black text-muted-foreground uppercase tracking-widest">السعر</th>
+                  <th class="text-center px-4 py-5 text-xs font-black text-muted-foreground uppercase tracking-widest hidden lg:table-cell">الحالة</th>
+                  <th class="text-center px-4 py-5 text-xs font-black text-muted-foreground uppercase tracking-widest hidden lg:table-cell">الوقود</th>
+                  <th class="text-center px-4 py-5 text-xs font-black text-muted-foreground uppercase tracking-widest hidden xl:table-cell">المسافة</th>
+                  <th class="text-center px-4 py-5 text-xs font-black text-muted-foreground uppercase tracking-widest hidden md:table-cell">التقييم</th>
+                  <th class="text-center px-8 py-5 text-xs font-black text-muted-foreground uppercase tracking-widest">إجراءات</th>
                 </tr>
-              }
-            </tbody>
-          </table>
+              </thead>
+              <tbody class="divide-y divide-border/50">
+                @for (car of paginatedCars(); track car.id; let even = $even) {
+                  <tr class="group hover:bg-primary/5 transition-colors">
+                    <!-- Car Name + Image -->
+                    <td class="px-8 py-5">
+                      <div class="flex items-center gap-4">
+                        <img [src]="car.images[0]"
+                             [alt]="car.brand"
+                             class="w-16 h-12 object-cover rounded-xl shadow-lg border border-border/10 flex-shrink-0" />
+                        <div>
+                          <p class="font-black text-foreground font-display">{{ car.brand }} {{ car.model }}</p>
+                          <p class="text-[10px] text-muted-foreground font-bold uppercase tracking-widest">{{ car.color }}</p>
+                        </div>
+                      </div>
+                    </td>
+
+                    <td class="px-4 py-5 text-center text-muted-foreground font-bold hidden md:table-cell">{{ car.year }}</td>
+
+                    <td class="px-4 py-5 text-center">
+                      <span class="font-black text-primary font-display text-lg">{{ car.price | number }} ر.س</span>
+                    </td>
+
+                    <td class="px-4 py-5 text-center hidden lg:table-cell">
+                      <span class="px-2 py-1 rounded-md text-[10px] font-black uppercase tracking-widest"
+                            [class.bg-primary/10]="car.condition === 'new'"
+                            [class.text-primary]="car.condition === 'new'"
+                            [class.bg-secondary]="car.condition === 'used'"
+                            [class.text-muted-foreground]="car.condition === 'used'">
+                        {{ car.condition === 'new' ? 'جديد' : 'مستعمل' }}
+                      </span>
+                    </td>
+
+                    <td class="px-4 py-5 text-center text-muted-foreground font-black text-[10px] uppercase tracking-widest hidden lg:table-cell">{{ car.fuelType }}</td>
+
+                    <td class="px-4 py-5 text-center text-muted-foreground font-bold hidden xl:table-cell">
+                      {{ car.mileage | number }} كم
+                    </td>
+
+                    <td class="px-4 py-5 text-center hidden md:table-cell">
+                      <div class="flex items-center justify-center gap-1.5 text-primary font-black">
+                        <span class="text-base">★</span>
+                        <span>{{ car.rating || '—' }}</span>
+                      </div>
+                    </td>
+
+                    <td class="px-8 py-5">
+                      <div class="flex items-center justify-center gap-3">
+                        <a [routerLink]="['/cars', car.id]"
+                          class="w-8 h-8 flex items-center justify-center rounded-lg bg-secondary text-foreground hover:bg-primary hover:text-white transition-all shadow-sm" title="عرض">👁️</a>
+                        <a [routerLink]="['/cars', car.id, 'edit']"
+                          class="w-8 h-8 flex items-center justify-center rounded-lg bg-secondary text-foreground hover:bg-primary hover:text-white transition-all shadow-sm" title="تعديل">✏️</a>
+                        <button (click)="toggleFavorite(car.id)"
+                          class="w-8 h-8 flex items-center justify-center rounded-lg bg-secondary transition-all shadow-sm"
+                          [class.text-primary]="carService.isFavorite(car.id)"
+                          [class.text-muted-foreground]="!carService.isFavorite(car.id)"
+                          title="مفضلة">
+                          {{ carService.isFavorite(car.id) ? '❤️' : '🤍' }}
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
         </div>
       }
 
       <!-- ── Pagination ─────────────────────────────────────────────── -->
-      @if (!isLoading() && filteredCars().length > itemsPerPage()) {
-        <app-pagination
-          [totalItems]="filteredCars().length"
-          [itemsPerPage]="itemsPerPage()"
-          [currentPage]="currentPage()"
-          (pageChange)="onPageChange($event)"
-          (itemsPerPageChange)="onItemsPerPageChange($event)">
-        </app-pagination>
-      }
+      <div class="w-full">
+        @if (!isLoading() && filteredCars().length > itemsPerPage()) {
+          <app-pagination
+            [totalItems]="filteredCars().length"
+            [itemsPerPage]="itemsPerPage()"
+            [currentPage]="currentPage()"
+            (pageChange)="onPageChange($event)"
+            (itemsPerPageChange)="onItemsPerPageChange($event)">
+          </app-pagination>
+        }
+      </div>
 
       <!-- ── Comparison Panel ───────────────────────────────────────── -->
       @if (comparisonList().length > 0) {
-        <div class="mt-10 glass-effect rounded-2xl p-6 border-blue-500/20">
-          <div class="flex items-center justify-between mb-5">
-            <h3 class="text-xl font-bold">🔄 المقارنة ({{ comparisonList().length }})</h3>
+        <div class="mt-12 card p-10 w-full animate-fadeInUp">
+          <div class="flex items-center justify-between mb-8">
+            <div class="flex items-center gap-4">
+              <div class="text-3xl">🔄</div>
+              <h3 class="text-2xl font-black font-display">مقارنة السيارات ({{ comparisonList().length }})</h3>
+            </div>
             <button (click)="clearComparison()"
-              class="btn px-4 py-2 rounded-lg bg-red-600/20 text-red-400 border border-red-600/20 text-sm">
+              class="btn btn-secondary px-6 py-2 rounded-lg text-xs font-black uppercase tracking-widest border border-border">
               مسح الكل
             </button>
           </div>
           <div class="overflow-x-auto">
             <table class="w-full text-sm">
               <thead>
-                <tr class="border-b border-slate-700">
-                  <th class="text-right py-2 px-4 text-slate-400 font-semibold">الخاصية</th>
+                <tr class="border-b border-border">
+                  <th class="text-right py-4 px-6 text-xs font-black text-muted-foreground uppercase tracking-widest">الخاصية</th>
                   @for (carId of comparisonList(); track carId) {
                     @if (getCarById(carId); as car) {
-                      <th class="text-center py-2 px-4 font-bold">{{ car.brand }} {{ car.model }}</th>
+                      <th class="text-center py-4 px-6 font-black font-display text-lg text-primary">{{ car.brand }} {{ car.model }}</th>
                     }
                   }
                 </tr>
               </thead>
-              <tbody>
+              <tbody class="divide-y divide-border/50">
                 @for (row of comparisonRows; track row.key) {
                   <tr class="border-b border-slate-700/50">
                     <td class="py-3 px-4 font-semibold text-slate-400">{{ row.label }}</td>

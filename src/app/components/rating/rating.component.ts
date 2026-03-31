@@ -11,14 +11,14 @@ import { FormsModule } from '@angular/forms';
       <!-- Display Mode -->
       @if (!isEditing) {
         <div class="flex items-center gap-2">
-          <div class="flex gap-1">
+          <div class="flex gap-1 drop-shadow-[0_0_8px_rgba(250,204,21,0.5)]">
             @for (i of [1, 2, 3, 4, 5]; track i) {
-              <span [class.text-yellow-400]="i <= (rating || 0)" class="text-2xl">★</span>
+              <span [class.text-warning]="i <= (rating || 0)" [class.text-slate-600]="i > (rating || 0)" class="text-2xl transition-colors">★</span>
             }
           </div>
-          <span class="text-lg font-semibold">{{ rating || 0 }}/5</span>
+          <span class="text-lg font-bold text-white">{{ rating || 0 }}/5</span>
           @if (reviewCount) {
-            <span class="text-sm text-gray-600">({{ reviewCount }} reviews)</span>
+            <span class="text-sm text-slate-400">({{ reviewCount }} reviews)</span>
           }
         </div>
       }
@@ -26,13 +26,14 @@ import { FormsModule } from '@angular/forms';
       <!-- Edit Mode -->
       @if (isEditing) {
         <div class="space-y-3">
-          <div class="flex gap-2">
+          <div class="flex gap-2 p-4 card border-glow inline-flex w-auto mx-auto justify-center bg-slate-900/50">
             @for (i of [1, 2, 3, 4, 5]; track i) {
               <button
                 (click)="setRating(i)"
-                class="text-3xl transition hover:scale-110"
-                [class.text-yellow-400]="i <= hoverRating()"
-                [class.text-gray-300]="i > hoverRating()"
+                class="text-4xl transition-all duration-300 hover:scale-125 focus:outline-none"
+                [class.text-warning]="i <= hoverRating() || (tempRating > 0 && i <= tempRating)"
+                [class.text-slate-600]="i > hoverRating() && (tempRating === 0 || i > tempRating)"
+                [class.drop-shadow-[0_0_15px_rgba(250,204,21,0.8)]]="i <= hoverRating() || (tempRating > 0 && i <= tempRating)"
                 (mouseenter)="hoverRating.set(i)"
                 (mouseleave)="hoverRating.set(0)"
               >
@@ -43,19 +44,19 @@ import { FormsModule } from '@angular/forms';
           <textarea
             [(ngModel)]="comment"
             placeholder="Share your experience with this car..."
-            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+            class="input w-full resize-none min-h-[120px]"
             rows="4"
           ></textarea>
-          <div class="flex gap-2">
+          <div class="flex gap-4">
             <button
               (click)="submitReview()"
-              class="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition font-medium"
+              class="flex-1 btn btn-primary"
             >
               Submit Review
             </button>
             <button
               (click)="cancelEdit()"
-              class="flex-1 bg-gray-200 text-gray-800 py-2 rounded-lg hover:bg-gray-300 transition font-medium"
+              class="flex-1 btn btn-secondary border border-slate-600 text-slate-300 hover:text-white"
             >
               Cancel
             </button>
@@ -65,22 +66,22 @@ import { FormsModule } from '@angular/forms';
 
       <!-- Reviews List -->
       @if (reviews && reviews.length > 0) {
-        <div class="space-y-3 mt-6 pt-6 border-t">
-          <h4 class="font-semibold text-gray-800">Recent Reviews</h4>
+        <div class="space-y-4 mt-8 pt-8 border-t border-slate-700">
+          <h4 class="text-xl font-bold text-white mb-6">Recent Reviews</h4>
           @for (review of reviews; track review.id) {
-            <div class="bg-gray-50 p-4 rounded-lg">
-              <div class="flex items-center justify-between mb-2">
-                <div class="flex items-center gap-2">
-                  <span class="font-medium text-gray-800">{{ review.author }}</span>
-                  <div class="flex gap-1">
+            <div class="card p-5 border-slate-700 hover:border-slate-500 transition-colors bg-slate-800/50">
+              <div class="flex items-start justify-between mb-4">
+                <div>
+                  <span class="font-bold text-white text-lg block mb-1">{{ review.author }}</span>
+                  <div class="flex gap-1 drop-shadow-[0_0_5px_rgba(250,204,21,0.3)]">
                     @for (i of [1, 2, 3, 4, 5]; track i) {
-                      <span [class.text-yellow-400]="i <= review.rating" class="text-sm">★</span>
+                      <span [class.text-warning]="i <= review.rating" [class.text-slate-600]="i > review.rating" class="text-sm">★</span>
                     }
                   </div>
                 </div>
-                <span class="text-xs text-gray-500">{{ review.date | date: 'short' }}</span>
+                <span class="text-xs text-slate-400 bg-slate-900 px-2 py-1 rounded-full border border-slate-700">{{ review.date | date: 'short' }}</span>
               </div>
-              <p class="text-sm text-gray-700">{{ review.comment }}</p>
+              <p class="text-slate-300 leading-relaxed">{{ review.comment }}</p>
             </div>
           }
         </div>

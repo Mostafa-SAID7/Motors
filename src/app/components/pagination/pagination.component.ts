@@ -6,25 +6,25 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div class="flex items-center justify-between gap-4 mt-6">
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mt-8 animate-fadeInUp">
       <!-- Items per page selector -->
       <div class="flex items-center gap-2">
-        <label class="text-sm text-gray-600">Items per page:</label>
+        <label class="text-sm font-semibold text-slate-300">Items per page:</label>
         <select
           [value]="itemsPerPage()"
           (change)="onItemsPerPageChange($event)"
-          class="px-3 py-1 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500"
+          class="px-3 py-1.5 bg-slate-900 border border-slate-600 rounded-lg text-sm text-white focus:ring-2 focus:ring-accent focus:border-transparent outline-none shadow-glow cursor-pointer transition-all duration-300"
         >
-          <option value="6">6</option>
-          <option value="12">12</option>
-          <option value="24">24</option>
-          <option value="48">48</option>
+          <option value="6" class="bg-slate-800">6</option>
+          <option value="12" class="bg-slate-800">12</option>
+          <option value="24" class="bg-slate-800">24</option>
+          <option value="48" class="bg-slate-800">48</option>
         </select>
       </div>
 
       <!-- Pagination Info -->
-      <div class="text-sm text-gray-600">
-        Showing {{ startItem() }} to {{ endItem() }} of {{ totalItems() }} items
+      <div class="text-sm text-slate-400">
+        Showing <span class="text-white font-medium">{{ startItem() }}</span> to <span class="text-white font-medium">{{ endItem() }}</span> of <span class="text-white font-medium">{{ totalItems() }}</span> items
       </div>
 
       <!-- Pagination Controls -->
@@ -32,20 +32,24 @@ import { CommonModule } from '@angular/common';
         <button
           (click)="previousPage()"
           [disabled]="currentPage() === 1"
-          class="px-3 py-1 border border-gray-300 rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition"
+          class="px-4 py-2 border border-slate-600 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 hover:border-slate-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
         >
-          ← Previous
+          ← Prev
         </button>
 
         <!-- Page Numbers -->
-        <div class="flex gap-1">
+        <div class="flex gap-2">
           @for (page of pageNumbers(); track page) {
             <button
               (click)="goToPage(page)"
-              [class.bg-blue-600]="page === currentPage()"
+              [class.bg-accent]="page === currentPage()"
               [class.text-white]="page === currentPage()"
-              [class.border-blue-600]="page === currentPage()"
-              class="px-3 py-1 border border-gray-300 rounded-lg hover:bg-gray-100 transition"
+              [class.border-accent]="page === currentPage()"
+              [class.shadow-glow]="page === currentPage()"
+              [class.border-slate-600]="page !== currentPage()"
+              [class.text-slate-300]="page !== currentPage()"
+              [class.hover:bg-slate-800]="page !== currentPage()"
+              class="w-10 h-10 border rounded-lg transition-all duration-300 flex items-center justify-center font-medium"
             >
               {{ page }}
             </button>
@@ -55,7 +59,7 @@ import { CommonModule } from '@angular/common';
         <button
           (click)="nextPage()"
           [disabled]="currentPage() === totalPages()"
-          class="px-3 py-1 border border-gray-300 rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition"
+          class="px-4 py-2 border border-slate-600 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 hover:border-slate-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
         >
           Next →
         </button>

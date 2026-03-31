@@ -8,34 +8,34 @@ import { CarService } from '../../core/services/car.service';
   standalone: true,
   imports: [CommonModule, RouterLink],
   template: `
-    <div class="container mx-auto px-4 py-12">
-      <a routerLink="/cars" class="text-blue-600 hover:underline mb-6 inline-block">← Back to Cars</a>
+    <div class="container mx-auto px-4 py-12 animate-fadeInUp">
+      <a routerLink="/cars" class="text-accent hover:text-accent-light hover:underline mb-6 inline-block transition-colors">← Back to Cars</a>
 
-      <h1 class="text-4xl font-bold mb-8">Compare Cars</h1>
+      <h1 class="text-4xl font-bold mb-8 gradient-text">Compare Cars</h1>
 
       @if (comparisonList().length === 0) {
-        <div class="text-center py-12">
-          <p class="text-2xl text-gray-600 mb-4">No cars selected for comparison</p>
-          <a routerLink="/cars" class="text-blue-600 hover:underline">Browse cars</a>
+        <div class="text-center py-12 card border-glow">
+          <p class="text-2xl text-slate-400 mb-4">No cars selected for comparison</p>
+          <a routerLink="/cars" class="btn btn-primary inline-block">Browse cars</a>
         </div>
       } @else {
-        <div class="overflow-x-auto">
-          <table class="w-full border-collapse">
-            <thead>
-              <tr class="bg-gray-100">
-                <th class="border p-4 text-left font-semibold">Feature</th>
+        <div class="overflow-x-auto card p-0 border-glow">
+          <table class="w-full border-collapse text-left text-slate-300">
+            <thead class="bg-slate-900 border-b border-slate-700">
+              <tr>
+                <th class="border-b border-r border-slate-700 p-4 font-semibold text-white">Feature</th>
                 @for (carId of comparisonList(); track carId) {
                   @let car = getCarById(carId);
                   @if (car) {
-                    <th class="border p-4 text-center">
+                    <th class="border-b border-slate-700 p-4 text-center">
                       <div class="mb-4">
-                        <img [src]="car.images[0]" alt="Car" class="w-full h-32 object-cover rounded mb-2" />
-                        <p class="font-bold">{{ car.brand }} {{ car.model }}</p>
-                        <p class="text-sm text-gray-600">{{ car.year }}</p>
+                        <img [src]="car.images[0]" alt="Car" class="w-full h-32 object-cover rounded mb-2 shadow-glow" />
+                        <p class="font-bold text-white">{{ car.brand }} {{ car.model }}</p>
+                        <p class="text-sm text-slate-400">{{ car.year }}</p>
                       </div>
                       <button
                         (click)="removeFromComparison(carId)"
-                        class="text-red-600 hover:underline text-sm"
+                        class="text-error hover:text-red-400 hover:underline text-sm transition-colors"
                       >
                         Remove
                       </button>
@@ -44,118 +44,118 @@ import { CarService } from '../../core/services/car.service';
                 }
               </tr>
             </thead>
-            <tbody>
+            <tbody class="divide-y divide-slate-700 leading-relaxed">
               <!-- Price -->
-              <tr class="border-b hover:bg-gray-50">
-                <td class="border p-4 font-semibold">Price</td>
+              <tr class="hover:bg-slate-800/50 transition-colors">
+                <td class="border-r border-slate-700 p-4 font-semibold text-white">Price</td>
                 @for (carId of comparisonList(); track carId) {
                   @let car = getCarById(carId);
                   @if (car) {
-                    <td class="border p-4 text-center">$ {{ car.price | number }}</td>
+                    <td class="p-4 text-center text-accent font-bold">$ {{ car.price | number }}</td>
                   }
                 }
               </tr>
 
               <!-- Year -->
-              <tr class="border-b hover:bg-gray-50">
-                <td class="border p-4 font-semibold">Year</td>
+              <tr class="hover:bg-slate-800/50 transition-colors border-t border-slate-700">
+                <td class="border-r border-slate-700 p-4 font-semibold text-white">Year</td>
                 @for (carId of comparisonList(); track carId) {
                   @let car = getCarById(carId);
                   @if (car) {
-                    <td class="border p-4 text-center">{{ car.year }}</td>
+                    <td class="p-4 text-center">{{ car.year }}</td>
                   }
                 }
               </tr>
 
               <!-- Condition -->
-              <tr class="border-b hover:bg-gray-50">
-                <td class="border p-4 font-semibold">Condition</td>
+              <tr class="hover:bg-slate-800/50 transition-colors border-t border-slate-700">
+                <td class="border-r border-slate-700 p-4 font-semibold text-white">Condition</td>
                 @for (carId of comparisonList(); track carId) {
                   @let car = getCarById(carId);
                   @if (car) {
-                    <td class="border p-4 text-center">{{ car.condition | uppercase }}</td>
+                    <td class="p-4 text-center"><span class="px-2 py-1 rounded text-xs font-bold bg-slate-800 border border-slate-600">{{ car.condition | uppercase }}</span></td>
                   }
                 }
               </tr>
 
               <!-- Mileage -->
-              <tr class="border-b hover:bg-gray-50">
-                <td class="border p-4 font-semibold">Mileage</td>
+              <tr class="hover:bg-slate-800/50 transition-colors border-t border-slate-700">
+                <td class="border-r border-slate-700 p-4 font-semibold text-white">Mileage</td>
                 @for (carId of comparisonList(); track carId) {
                   @let car = getCarById(carId);
                   @if (car) {
-                    <td class="border p-4 text-center">{{ car.mileage | number }} miles</td>
+                    <td class="p-4 text-center">{{ car.mileage | number }} miles</td>
                   }
                 }
               </tr>
 
               <!-- Transmission -->
-              <tr class="border-b hover:bg-gray-50">
-                <td class="border p-4 font-semibold">Transmission</td>
+              <tr class="hover:bg-slate-800/50 transition-colors border-t border-slate-700">
+                <td class="border-r border-slate-700 p-4 font-semibold text-white">Transmission</td>
                 @for (carId of comparisonList(); track carId) {
                   @let car = getCarById(carId);
                   @if (car) {
-                    <td class="border p-4 text-center">{{ car.transmission }}</td>
+                    <td class="p-4 text-center">{{ car.transmission }}</td>
                   }
                 }
               </tr>
 
               <!-- Fuel Type -->
-              <tr class="border-b hover:bg-gray-50">
-                <td class="border p-4 font-semibold">Fuel Type</td>
+              <tr class="hover:bg-slate-800/50 transition-colors border-t border-slate-700">
+                <td class="border-r border-slate-700 p-4 font-semibold text-white">Fuel Type</td>
                 @for (carId of comparisonList(); track carId) {
                   @let car = getCarById(carId);
                   @if (car) {
-                    <td class="border p-4 text-center">{{ car.fuelType }}</td>
+                    <td class="p-4 text-center">{{ car.fuelType }}</td>
                   }
                 }
               </tr>
 
               <!-- Engine Size -->
-              <tr class="border-b hover:bg-gray-50">
-                <td class="border p-4 font-semibold">Engine Size</td>
+              <tr class="hover:bg-slate-800/50 transition-colors border-t border-slate-700">
+                <td class="border-r border-slate-700 p-4 font-semibold text-white">Engine Size</td>
                 @for (carId of comparisonList(); track carId) {
                   @let car = getCarById(carId);
                   @if (car) {
-                    <td class="border p-4 text-center">{{ car.engineSize }}</td>
+                    <td class="p-4 text-center">{{ car.engineSize }}</td>
                   }
                 }
               </tr>
 
               <!-- Color -->
-              <tr class="border-b hover:bg-gray-50">
-                <td class="border p-4 font-semibold">Color</td>
+              <tr class="hover:bg-slate-800/50 transition-colors border-t border-slate-700">
+                <td class="border-r border-slate-700 p-4 font-semibold text-white">Color</td>
                 @for (carId of comparisonList(); track carId) {
                   @let car = getCarById(carId);
                   @if (car) {
-                    <td class="border p-4 text-center">{{ car.color }}</td>
+                    <td class="p-4 text-center">{{ car.color }}</td>
                   }
                 }
               </tr>
 
               <!-- Rating -->
-              <tr class="border-b hover:bg-gray-50">
-                <td class="border p-4 font-semibold">Rating</td>
+              <tr class="hover:bg-slate-800/50 transition-colors border-t border-slate-700">
+                <td class="border-r border-slate-700 p-4 font-semibold text-white">Rating</td>
                 @for (carId of comparisonList(); track carId) {
                   @let car = getCarById(carId);
                   @if (car) {
-                    <td class="border p-4 text-center">
-                      <span class="text-yellow-400">★</span> {{ car.rating }}/5
+                    <td class="p-4 text-center font-bold text-white">
+                      <span class="text-warning">★</span> {{ car.rating }}/5
                     </td>
                   }
                 }
               </tr>
 
               <!-- Action -->
-              <tr>
-                <td class="border p-4"></td>
+              <tr class="hover:bg-slate-800/50 transition-colors border-t border-slate-700">
+                <td class="border-r border-slate-700 p-4"></td>
                 @for (carId of comparisonList(); track carId) {
                   @let car = getCarById(carId);
                   @if (car) {
-                    <td class="border p-4 text-center">
+                    <td class="p-4 text-center">
                       <a
                         [routerLink]="['/cars', car.id]"
-                        class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg inline-block"
+                        class="btn btn-secondary text-sm inline-block"
                       >
                         View Details
                       </a>
@@ -167,10 +167,10 @@ import { CarService } from '../../core/services/car.service';
           </table>
         </div>
 
-        <div class="mt-8 text-center">
+        <div class="mt-8 text-center animate-fadeInUp">
           <button
             (click)="clearComparison()"
-            class="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg"
+            class="btn btn-secondary border border-error text-error hover:bg-error hover:text-white transition-colors"
           >
             Clear Comparison
           </button>

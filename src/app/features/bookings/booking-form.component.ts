@@ -11,32 +11,37 @@ import { NotificationService } from '../../core/services/notification.service';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterLink],
   template: `
-    <div class="container mx-auto px-4 py-12">
-      <a routerLink="/cars" class="text-blue-600 hover:underline mb-6 inline-block">← Back to Cars</a>
+    <div class="focused-page-container font-body">
+      <div class="section-header mb-12">
+        <h1 class="text-gradient">احجز رحلتك الآن</h1>
+        <p>أكمل البيانات أدناه لتأكيد حجز سيارتك المفضلة</p>
+      </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start w-full">
         <!-- Car Summary -->
         @if (car()) {
-          <div class="lg:col-span-1">
-            <div class="bg-white rounded-lg shadow p-6 sticky top-4">
-              <img [src]="car()!.images[0]" alt="Car" class="w-full h-48 object-cover rounded-lg mb-4" />
-              <h3 class="text-xl font-bold mb-2">{{ car()!.brand }} {{ car()!.model }}</h3>
-              <p class="text-gray-600 mb-4">{{ car()!.year }} • {{ car()!.condition | uppercase }}</p>
-              <div class="text-3xl font-bold text-blue-600 mb-6">$ {{ car()!.price | number }}</div>
-
-              <!-- Booking Summary -->
-              <div class="bg-gray-50 rounded-lg p-4 space-y-2">
-                <div class="flex justify-between">
-                  <span class="text-gray-600">Daily Rate:</span>
-                  <span class="font-semibold">$ {{ dailyRate() | number }}</span>
+          <div class="lg:col-span-4 sticky top-6">
+            <div class="card p-8 border-glow">
+              <div class="relative group mb-6 overflow-hidden rounded-[1.5rem]">
+                <img [src]="car()!.images[0]" alt="Car" class="w-full h-56 object-cover transform group-hover:scale-105 transition-transform duration-500" />
+                <div class="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent"></div>
+              </div>
+              
+              <h3 class="text-2xl font-black mb-1 text-foreground font-display">{{ car()!.brand }} {{ car()!.model }}</h3>
+              <p class="text-muted-foreground font-black text-xs mb-6 uppercase tracking-widest">{{ car()!.year }} • {{ car()!.condition }}</p>
+              
+              <div class="bg-secondary/40 rounded-xl p-6 space-y-4 border border-border/50">
+                <div class="flex justify-between items-center text-sm font-bold">
+                  <span class="text-muted-foreground uppercase tracking-widest text-[10px]">السعر اليومي</span>
+                  <span class="font-black text-foreground">{{ dailyRate() | number }} ر.س</span>
                 </div>
-                <div class="flex justify-between">
-                  <span class="text-gray-600">Days:</span>
-                  <span class="font-semibold">{{ numberOfDays() }}</span>
+                <div class="flex justify-between items-center text-sm font-bold">
+                  <span class="text-muted-foreground uppercase tracking-widest text-[10px]">المدة</span>
+                  <span class="font-black text-foreground">{{ numberOfDays() }} أيام</span>
                 </div>
-                <div class="border-t pt-2 flex justify-between">
-                  <span class="font-bold">Total:</span>
-                  <span class="font-bold text-lg text-blue-600">$ {{ totalPrice() | number }}</span>
+                <div class="pt-4 border-t border-border/50 flex justify-between items-end">
+                  <span class="text-[10px] font-black text-muted-foreground uppercase tracking-widest pb-1">الإجمالي</span>
+                  <span class="text-3xl font-black text-primary font-display">{{ totalPrice() | number }} ر.س</span>
                 </div>
               </div>
             </div>
@@ -44,94 +49,66 @@ import { NotificationService } from '../../core/services/notification.service';
         }
 
         <!-- Booking Form -->
-        <div class="lg:col-span-2">
-          <div class="bg-white rounded-lg shadow p-8">
-            <h2 class="text-3xl font-bold mb-6">Book This Car</h2>
+        <div class="lg:col-span-8">
+          <div class="card p-8 md:p-10 border-glow shadow-glow-lg">
+            <h2 class="text-2xl font-black mb-10 text-foreground flex items-center gap-4 font-display">
+              <span class="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center text-lg font-black border border-primary/20">١</span>
+              تفاصيل الحجز
+            </h2>
 
-            <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-6">
-              <!-- Start Date -->
-              <div>
-                <label class="block text-sm font-semibold mb-2">Start Date</label>
-                <input
-                  formControlName="startDate"
-                  type="date"
-                  class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-                @if (form.get('startDate')?.invalid && form.get('startDate')?.touched) {
-                  <p class="text-red-500 text-sm mt-1">Start date is required</p>
-                }
-              </div>
-
-              <!-- End Date -->
-              <div>
-                <label class="block text-sm font-semibold mb-2">End Date</label>
-                <input
-                  formControlName="endDate"
-                  type="date"
-                  class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-                @if (form.get('endDate')?.invalid && form.get('endDate')?.touched) {
-                  <p class="text-red-500 text-sm mt-1">End date is required</p>
-                }
-              </div>
-
-              <!-- Driver Info -->
-              <div class="grid grid-cols-2 gap-4">
-                <div>
-                  <label class="block text-sm font-semibold mb-2">First Name</label>
-                  <input
-                    formControlName="firstName"
-                    type="text"
-                    class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  />
+            <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-10">
+              <!-- Dates Section -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="space-y-2">
+                  <label class="text-xs font-bold text-muted-foreground uppercase tracking-widest mr-1">تاريخ الاستلام</label>
+                  <input formControlName="startDate" type="date" class="w-full input" />
                 </div>
-                <div>
-                  <label class="block text-sm font-semibold mb-2">Last Name</label>
-                  <input
-                    formControlName="lastName"
-                    type="text"
-                    class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  />
+                <div class="space-y-2">
+                  <label class="text-xs font-bold text-muted-foreground uppercase tracking-widest mr-1">تاريخ الإرجاع</label>
+                  <input formControlName="endDate" type="date" class="w-full input" />
                 </div>
               </div>
 
-              <!-- Phone -->
-              <div>
-                <label class="block text-sm font-semibold mb-2">Phone Number</label>
-                <input
-                  formControlName="phone"
-                  type="tel"
-                  class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
+              <div class="h-px bg-border/40 w-full"></div>
+
+              <h2 class="text-2xl font-black mb-10 text-foreground flex items-center gap-4 font-display">
+                <span class="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center text-lg font-black border border-primary/20">٢</span>
+                بيانات المستأجر
+              </h2>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="space-y-2">
+                  <label class="text-xs font-bold text-muted-foreground uppercase tracking-widest mr-1">الاسم الأول</label>
+                  <input formControlName="firstName" type="text" class="w-full input" placeholder="محمد" />
+                </div>
+                <div class="space-y-2">
+                  <label class="text-xs font-bold text-muted-foreground uppercase tracking-widest mr-1">اسم العائلة</label>
+                  <input formControlName="lastName" type="text" class="w-full input" placeholder="أحمد" />
+                </div>
               </div>
 
-              <!-- Special Requests -->
-              <div>
-                <label class="block text-sm font-semibold mb-2">Special Requests</label>
-                <textarea
-                  formControlName="specialRequests"
-                  rows="4"
-                  placeholder="Any special requests or requirements?"
-                  class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-                ></textarea>
+              <div class="space-y-2">
+                <label class="text-xs font-bold text-muted-foreground uppercase tracking-widest mr-1">رقم الجوال الفعال</label>
+                <input formControlName="phone" type="tel" class="w-full input" placeholder="+966 50 000 0000" />
               </div>
 
-              <!-- Terms -->
-              <label class="flex items-start">
-                <input type="checkbox" formControlName="terms" class="w-4 h-4 rounded mt-1" />
-                <span class="ml-2 text-sm text-gray-600">
-                  I agree to the booking terms and conditions
-                </span>
-              </label>
+              <div class="space-y-2">
+                <label class="text-xs font-bold text-muted-foreground uppercase tracking-widest mr-1">ملاحظات إضافية</label>
+                <textarea formControlName="specialRequests" rows="3" class="w-full input resize-none" placeholder="أي طلبات خاصة؟"></textarea>
+              </div>
 
-              <!-- Submit -->
-              <button
-                type="submit"
-                [disabled]="!form.valid || isLoading()"
-                class="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-semibold py-3 rounded-lg transition"
-              >
-                {{ isLoading() ? 'Processing...' : 'Confirm Booking' }}
-              </button>
+              <div class="pt-8">
+                <button
+                  type="submit"
+                  [disabled]="!form.valid || isLoading()"
+                  class="w-full btn btn-primary py-5 rounded-xl text-sm font-black uppercase tracking-[0.2em] shadow-glow"
+                >
+                  {{ isLoading() ? 'جاري المعالجة...' : 'تأكيد الحجز الآن' }}
+                </button>
+                <p class="text-center text-muted-foreground text-[10px] mt-6 font-bold uppercase tracking-widest">
+                  دفع آمن ومدعوم بواسطة بوابة دفع Motors
+                </p>
+              </div>
             </form>
           </div>
         </div>

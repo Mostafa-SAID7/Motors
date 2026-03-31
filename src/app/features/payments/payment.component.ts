@@ -8,67 +8,67 @@ import { NotificationService } from '../../core/services/notification.service';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   template: `
-    <div class="container mx-auto px-4 py-12">
+    <div class="container mx-auto px-4 py-12 animate-fadeInUp">
       <div class="max-w-2xl mx-auto">
-        <h1 class="text-4xl font-bold mb-8">Payment</h1>
+        <h1 class="text-4xl font-bold mb-8 gradient-text">Payment</h1>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <!-- Payment Form -->
           <div class="lg:col-span-2">
-            <div class="bg-white rounded-lg shadow p-8">
+            <div class="card p-8 border-glow">
               <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-6">
                 <!-- Card Details -->
-                <div>
-                  <label class="block text-sm font-semibold mb-2">Card Number</label>
+                <div class="form-group">
+                  <label class="block text-sm font-semibold mb-2 text-slate-300">Card Number</label>
                   <input
                     formControlName="cardNumber"
                     type="text"
                     placeholder="1234 5678 9012 3456"
-                    class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    class="w-full input"
                   />
                 </div>
 
                 <!-- Expiry and CVC -->
                 <div class="grid grid-cols-2 gap-4">
-                  <div>
-                    <label class="block text-sm font-semibold mb-2">Expiry Date</label>
+                  <div class="form-group">
+                    <label class="block text-sm font-semibold mb-2 text-slate-300">Expiry Date</label>
                     <input
                       formControlName="expiry"
                       type="text"
                       placeholder="MM/YY"
-                      class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      class="w-full input"
                     />
                   </div>
-                  <div>
-                    <label class="block text-sm font-semibold mb-2">CVC</label>
+                  <div class="form-group">
+                    <label class="block text-sm font-semibold mb-2 text-slate-300">CVC</label>
                     <input
                       formControlName="cvc"
                       type="text"
                       placeholder="123"
-                      class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      class="w-full input"
                     />
                   </div>
                 </div>
 
                 <!-- Cardholder Name -->
-                <div>
-                  <label class="block text-sm font-semibold mb-2">Cardholder Name</label>
+                <div class="form-group">
+                  <label class="block text-sm font-semibold mb-2 text-slate-300">Cardholder Name</label>
                   <input
                     formControlName="cardholderName"
                     type="text"
                     placeholder="John Doe"
-                    class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    class="w-full input"
                   />
                 </div>
 
                 <!-- Billing Address -->
-                <div>
-                  <label class="block text-sm font-semibold mb-2">Billing Address</label>
+                <div class="form-group">
+                  <label class="block text-sm font-semibold mb-2 text-slate-300">Billing Address</label>
                   <input
                     formControlName="address"
                     type="text"
                     placeholder="123 Main St"
-                    class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    class="w-full input"
                   />
                 </div>
 
@@ -78,19 +78,19 @@ import { NotificationService } from '../../core/services/notification.service';
                     formControlName="city"
                     type="text"
                     placeholder="City"
-                    class="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    class="input"
                   />
                   <input
                     formControlName="state"
                     type="text"
                     placeholder="State"
-                    class="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    class="input"
                   />
                   <input
                     formControlName="zip"
                     type="text"
                     placeholder="ZIP"
-                    class="border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    class="input"
                   />
                 </div>
 
@@ -98,7 +98,7 @@ import { NotificationService } from '../../core/services/notification.service';
                 <button
                   type="submit"
                   [disabled]="!form.valid || isLoading()"
-                  class="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-semibold py-3 rounded-lg transition"
+                  class="w-full btn btn-primary py-3 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {{ isLoading() ? 'Processing...' : 'Pay Now' }}
                 </button>
@@ -108,51 +108,51 @@ import { NotificationService } from '../../core/services/notification.service';
 
           <!-- Order Summary -->
           <div class="lg:col-span-1">
-            <div class="bg-white rounded-lg shadow p-6 sticky top-4">
-              <h2 class="text-xl font-bold mb-4">Order Summary</h2>
+            <div class="card p-6 sticky top-4 border-glow">
+              <h2 class="text-xl font-bold mb-4 text-white">Order Summary</h2>
 
-              <div class="space-y-4 mb-6">
+              <div class="space-y-4 mb-6 text-slate-300">
                 <div class="flex justify-between">
-                  <span class="text-gray-600">Subtotal</span>
+                  <span class="text-slate-400">Subtotal</span>
                   <span>$ {{ subtotal() | number }}</span>
                 </div>
                 <div class="flex justify-between">
-                  <span class="text-gray-600">Tax (10%)</span>
+                  <span class="text-slate-400">Tax (10%)</span>
                   <span>$ {{ tax() | number }}</span>
                 </div>
                 <div class="flex justify-between">
-                  <span class="text-gray-600">Booking Fee</span>
+                  <span class="text-slate-400">Booking Fee</span>
                   <span>$ {{ bookingFee() | number }}</span>
                 </div>
-                <div class="border-t pt-4 flex justify-between font-bold text-lg">
+                <div class="border-t border-slate-700 pt-4 flex justify-between font-bold text-lg text-white">
                   <span>Total</span>
-                  <span class="text-blue-600">$ {{ total() | number }}</span>
+                  <span class="text-accent">$ {{ total() | number }}</span>
                 </div>
               </div>
 
               <!-- Payment Methods -->
               <div class="mb-6">
-                <p class="text-sm font-semibold mb-3">Payment Methods</p>
-                <div class="space-y-2">
-                  <label class="flex items-center">
-                    <input type="radio" name="method" checked class="w-4 h-4" />
+                <p class="text-sm font-semibold mb-3 text-slate-300">Payment Methods</p>
+                <div class="space-y-2 text-slate-400">
+                  <label class="flex items-center hover:text-white transition-colors cursor-pointer">
+                    <input type="radio" name="method" checked class="w-4 h-4 accent-blue-500" />
                     <span class="ml-2 text-sm">Credit Card</span>
                   </label>
-                  <label class="flex items-center">
-                    <input type="radio" name="method" class="w-4 h-4" />
+                  <label class="flex items-center hover:text-white transition-colors cursor-pointer">
+                    <input type="radio" name="method" class="w-4 h-4 accent-blue-500" />
                     <span class="ml-2 text-sm">PayPal</span>
                   </label>
-                  <label class="flex items-center">
-                    <input type="radio" name="method" class="w-4 h-4" />
+                  <label class="flex items-center hover:text-white transition-colors cursor-pointer">
+                    <input type="radio" name="method" class="w-4 h-4 accent-blue-500" />
                     <span class="ml-2 text-sm">Apple Pay</span>
                   </label>
                 </div>
               </div>
 
               <!-- Security -->
-              <div class="bg-green-50 border border-green-200 rounded-lg p-4">
-                <p class="text-sm text-green-800">
-                  ✓ Your payment is secure and encrypted
+              <div class="bg-green-900/20 border border-green-500/50 rounded-lg p-4">
+                <p class="text-sm text-green-400 flex items-center gap-2">
+                  <span>✓</span> Your payment is secure and encrypted
                 </p>
               </div>
             </div>

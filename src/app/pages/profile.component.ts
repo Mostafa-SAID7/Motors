@@ -10,200 +10,153 @@ import { NotificationService } from '../core/services/notification.service';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   template: `
-    <div class="min-h-screen bg-gray-50">
-      <!-- Header -->
-      <div class="bg-gradient-to-r from-gray-900 to-gray-800 text-white py-8">
-        <div class="container mx-auto px-4">
-          <h1 class="text-4xl font-bold">My Profile</h1>
-          <p class="text-gray-400 mt-2">Manage your account settings</p>
-        </div>
+    <div class="focused-page-container font-body">
+      <div class="section-header">
+        <h1 class="text-gradient">ملفي الشخصي</h1>
+        <p>إدارة إعدادات حسابك وحجوزاتك بكل سهولة</p>
       </div>
 
-      <!-- Content -->
-      <div class="container mx-auto px-4 py-12">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <!-- Sidebar -->
-          <div class="lg:col-span-1">
-            <div class="bg-white rounded-lg shadow p-6">
-              <!-- Profile Avatar -->
-              <div class="text-center mb-6">
-                <div class="w-24 h-24 mx-auto bg-gradient-to-br from-red-500 to-red-600 rounded-full flex items-center justify-center text-white text-4xl font-bold mb-4">
-                  {{ getInitials() }}
-                </div>
-                <h2 class="text-xl font-bold">{{ currentUser()?.displayName || 'User' }}</h2>
-                <p class="text-gray-600 text-sm">{{ currentUser()?.email }}</p>
-              </div>
-
-              <!-- Menu -->
-              <nav class="space-y-2">
-                <button
-                  (click)="activeTab.set('profile')"
-                  [class.bg-red-50]="activeTab() === 'profile'"
-                  [class.text-red-600]="activeTab() === 'profile'"
-                  class="w-full text-left px-4 py-2 rounded hover:bg-gray-100 transition"
-                >
-                  Profile Settings
-                </button>
-                <button
-                  (click)="activeTab.set('bookings')"
-                  [class.bg-red-50]="activeTab() === 'bookings'"
-                  [class.text-red-600]="activeTab() === 'bookings'"
-                  class="w-full text-left px-4 py-2 rounded hover:bg-gray-100 transition"
-                >
-                  My Bookings
-                </button>
-                <button
-                  (click)="activeTab.set('favorites')"
-                  [class.bg-red-50]="activeTab() === 'favorites'"
-                  [class.text-red-600]="activeTab() === 'favorites'"
-                  class="w-full text-left px-4 py-2 rounded hover:bg-gray-100 transition"
-                >
-                  Favorites
-                </button>
-                <button
-                  (click)="activeTab.set('security')"
-                  [class.bg-red-50]="activeTab() === 'security'"
-                  [class.text-red-600]="activeTab() === 'security'"
-                  class="w-full text-left px-4 py-2 rounded hover:bg-gray-100 transition"
-                >
-                  Security
-                </button>
-              </nav>
-
-              <!-- Logout Button -->
-              <button
-                (click)="logout()"
-                class="w-full mt-6 bg-red-600 hover:bg-red-700 text-white font-semibold py-2 rounded-lg transition"
-              >
-                Logout
-              </button>
+      <div class="grid grid-cols-1 lg:grid-cols-4 gap-10 w-full">
+        <!-- Sidebar -->
+        <div class="lg:col-span-1">
+          <div class="card p-8 border-glow flex flex-col items-center">
+            <div class="w-24 h-24 bg-gradient-to-br from-primary to-primary/60 rounded-full flex items-center justify-center text-white text-3xl font-black mb-6 shadow-glow border-4 border-background">
+              {{ getInitials() }}
             </div>
+            <h2 class="text-xl font-black text-foreground mb-1 font-display">{{ currentUser()?.displayName || 'المستخدم' }}</h2>
+            <p class="text-muted-foreground text-xs mb-8 font-bold tracking-wider tracking-[0.1em] uppercase">{{ currentUser()?.email }}</p>
+
+            <nav class="w-full space-y-2">
+              <button
+                (click)="activeTab.set('profile')"
+                [class.bg-primary]="activeTab() === 'profile'"
+                [class.text-white]="activeTab() === 'profile'"
+                [class.shadow-glow]="activeTab() === 'profile'"
+                class="w-full text-right px-5 py-3.5 rounded-xl text-muted-foreground hover:bg-secondary transition-all font-bold text-sm flex items-center gap-4"
+              >
+                <div class="w-2 h-2 rounded-full bg-current"></div>
+                إعدادات الملف الشخصي
+              </button>
+              <button
+                (click)="activeTab.set('bookings')"
+                [class.bg-primary]="activeTab() === 'bookings'"
+                [class.text-white]="activeTab() === 'bookings'"
+                [class.shadow-glow]="activeTab() === 'bookings'"
+                class="w-full text-right px-5 py-3.5 rounded-xl text-muted-foreground hover:bg-secondary transition-all font-bold text-sm flex items-center gap-4"
+              >
+                <div class="w-2 h-2 rounded-full bg-current"></div>
+                حجوزاتي
+              </button>
+              <button
+                (click)="activeTab.set('security')"
+                [class.bg-primary]="activeTab() === 'security'"
+                [class.text-white]="activeTab() === 'security'"
+                [class.shadow-glow]="activeTab() === 'security'"
+                class="w-full text-right px-5 py-3.5 rounded-xl text-muted-foreground hover:bg-secondary transition-all font-bold text-sm flex items-center gap-4"
+              >
+                <div class="w-2 h-2 rounded-full bg-current"></div>
+                الأمان والخصوصية
+              </button>
+            </nav>
+
+            <button
+              (click)="logout()"
+              class="w-full mt-10 btn btn-secondary py-3.5 rounded-xl text-xs uppercase tracking-widest font-black"
+            >
+              تسجيل الخروج
+            </button>
           </div>
+        </div>
 
-          <!-- Main Content -->
-          <div class="lg:col-span-2">
-            <!-- Profile Tab -->
-            @if (activeTab() === 'profile') {
-              <div class="bg-white rounded-lg shadow p-8">
-                <h3 class="text-2xl font-bold mb-6">Profile Settings</h3>
-                <form [formGroup]="profileForm" (ngSubmit)="updateProfile()" class="space-y-6">
-                  <div class="grid grid-cols-2 gap-4">
-                    <div>
-                      <label class="block text-sm font-semibold mb-2">First Name</label>
-                      <input
-                        formControlName="firstName"
-                        type="text"
-                        class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                      />
-                    </div>
-                    <div>
-                      <label class="block text-sm font-semibold mb-2">Last Name</label>
-                      <input
-                        formControlName="lastName"
-                        type="text"
-                        class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                      />
-                    </div>
-                  </div>
+        <!-- Main Content -->
+        <div class="lg:col-span-3">
+          <!-- Profile Tab -->
+          @if (activeTab() === 'profile') {
+            <div class="card p-10 animate-fadeInUp">
+              <div class="mb-10">
+                <h3 class="text-2xl font-black text-foreground mb-2 font-display">معلومات الحساب</h3>
+                <p class="text-muted-foreground text-[15px] font-medium">قم بتحديث بياناتك الشخصية ومعلومات الاتصال</p>
+              </div>
 
-                  <div>
-                    <label class="block text-sm font-semibold mb-2">Email</label>
-                    <input
-                      formControlName="email"
-                      type="email"
-                      [disabled]="true"
-                      class="w-full border border-gray-300 rounded-lg px-4 py-2 bg-gray-100 cursor-not-allowed"
-                    />
-                  </div>
+              <form [formGroup]="profileForm" (ngSubmit)="updateProfile()" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="space-y-2">
+                  <label class="text-xs font-bold text-muted-foreground uppercase tracking-widest mr-1">الاسم الأول</label>
+                  <input formControlName="firstName" type="text" class="w-full input" placeholder="أدخل اسمك" />
+                </div>
+                <div class="space-y-2">
+                  <label class="text-xs font-bold text-muted-foreground uppercase tracking-widest mr-1">اسم العائلة</label>
+                  <input formControlName="lastName" type="text" class="w-full input" placeholder="أدخل اسم العائلة" />
+                </div>
 
-                  <div>
-                    <label class="block text-sm font-semibold mb-2">Phone</label>
-                    <input
-                      formControlName="phone"
-                      type="tel"
-                      class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                    />
-                  </div>
+                <div class="space-y-2 md:col-span-2">
+                  <label class="text-xs font-bold text-muted-foreground uppercase tracking-widest mr-1">البريد الإلكتروني (للقراءة فقط)</label>
+                  <input formControlName="email" type="email" [disabled]="true" class="w-full input opacity-50 cursor-not-allowed" />
+                </div>
 
-                  <div>
-                    <label class="block text-sm font-semibold mb-2">Address</label>
-                    <input
-                      formControlName="address"
-                      type="text"
-                      class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                    />
-                  </div>
+                <div class="space-y-2 md:col-span-2">
+                  <label class="text-xs font-bold text-muted-foreground uppercase tracking-widest mr-1">رقم الهاتف</label>
+                  <input formControlName="phone" type="tel" class="w-full input" placeholder="+966 50 000 0000" />
+                </div>
 
-                  <button
-                    type="submit"
-                    [disabled]="isLoading()"
-                    class="bg-red-600 hover:bg-red-700 disabled:opacity-50 text-white font-semibold py-2 px-6 rounded-lg transition"
-                  >
-                    {{ isLoading() ? 'Saving...' : 'Save Changes' }}
+                <div class="md:col-span-2 pt-4">
+                  <button type="submit" [disabled]="isLoading()" class="btn btn-primary px-12 py-4 rounded-xl text-sm uppercase tracking-widest font-black">
+                    {{ isLoading() ? 'جاري الحفظ...' : 'حفظ التغييرات' }}
                   </button>
-                </form>
+                </div>
+              </form>
+            </div>
+          }
+
+          <!-- Bookings Tab -->
+          @if (activeTab() === 'bookings') {
+            <div class="card p-10 animate-fadeInUp">
+              <div class="mb-10">
+                <h3 class="text-2xl font-black text-foreground mb-2 font-display">سجل الحجوزات</h3>
+                <p class="text-muted-foreground text-[15px] font-medium">إدارة حجوزاتك الحالية والسابقة</p>
               </div>
-            }
-
-            <!-- Bookings Tab -->
-            @if (activeTab() === 'bookings') {
-              <div class="bg-white rounded-lg shadow p-8">
-                <h3 class="text-2xl font-bold mb-6">My Bookings</h3>
-                <p class="text-gray-600">No bookings yet. Start booking your favorite cars!</p>
+              
+              <div class="text-center py-24 border-2 border-dashed border-border rounded-[2rem] bg-secondary/20">
+                <div class="text-6xl mb-6 opacity-20">🚗</div>
+                <p class="text-foreground font-black text-lg font-display">لا توجد حجوزات حتى الآن</p>
+                <p class="text-muted-foreground mt-2 font-medium">ابدأ باستكشاف معرضنا لحجز رحلتك القادمة</p>
+                <button routerLink="/cars" class="mt-8 btn btn-primary px-8 py-3 rounded-xl text-xs uppercase font-black">استكشف السيارات</button>
               </div>
-            }
+            </div>
+          }
 
-            <!-- Favorites Tab -->
-            @if (activeTab() === 'favorites') {
-              <div class="bg-white rounded-lg shadow p-8">
-                <h3 class="text-2xl font-bold mb-6">Favorite Cars</h3>
-                <p class="text-gray-600">No favorites yet. Add cars to your favorites!</p>
+          <!-- Security Tab -->
+          @if (activeTab() === 'security') {
+            <div class="card p-10 animate-fadeInUp">
+              <div class="mb-10">
+                <h3 class="text-2xl font-black text-foreground mb-2 font-display">الأمان وكلمة المرور</h3>
+                <p class="text-muted-foreground text-[15px] font-medium">قم بحماية حسابك باستخدام كلمة مرور قوية</p>
               </div>
-            }
 
-            <!-- Security Tab -->
-            @if (activeTab() === 'security') {
-              <div class="bg-white rounded-lg shadow p-8">
-                <h3 class="text-2xl font-bold mb-6">Security Settings</h3>
-                <form [formGroup]="securityForm" (ngSubmit)="changePassword()" class="space-y-6">
-                  <div>
-                    <label class="block text-sm font-semibold mb-2">Current Password</label>
-                    <input
-                      formControlName="currentPassword"
-                      type="password"
-                      class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                    />
+              <form [formGroup]="securityForm" (ngSubmit)="changePassword()" class="space-y-8">
+                <div class="space-y-2">
+                  <label class="text-xs font-bold text-muted-foreground uppercase tracking-widest mr-1">كلمة المرور الحالية</label>
+                  <input formControlName="currentPassword" type="password" class="w-full input" placeholder="••••••••" />
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div class="space-y-2">
+                    <label class="text-xs font-bold text-muted-foreground uppercase tracking-widest mr-1">كلمة المرور الجديدة</label>
+                    <input formControlName="newPassword" type="password" class="w-full input px-4" placeholder="••••••••" />
                   </div>
-
-                  <div>
-                    <label class="block text-sm font-semibold mb-2">New Password</label>
-                    <input
-                      formControlName="newPassword"
-                      type="password"
-                      class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                    />
+                  <div class="space-y-2">
+                    <label class="text-xs font-bold text-muted-foreground uppercase tracking-widest mr-1">تأكيد كلمة المرور الجديدة</label>
+                    <input formControlName="confirmPassword" type="password" class="w-full input px-4" placeholder="••••••••" />
                   </div>
+                </div>
 
-                  <div>
-                    <label class="block text-sm font-semibold mb-2">Confirm Password</label>
-                    <input
-                      formControlName="confirmPassword"
-                      type="password"
-                      class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                    />
-                  </div>
-
-                  <button
-                    type="submit"
-                    [disabled]="isLoading()"
-                    class="bg-red-600 hover:bg-red-700 disabled:opacity-50 text-white font-semibold py-2 px-6 rounded-lg transition"
-                  >
-                    {{ isLoading() ? 'Updating...' : 'Change Password' }}
+                <div class="pt-4">
+                  <button type="submit" [disabled]="isLoading()" class="btn btn-primary px-12 py-4 rounded-xl text-sm uppercase tracking-widest font-black">
+                    {{ isLoading() ? 'جاري التحديث...' : 'تغيير كلمة المرور' }}
                   </button>
-                </form>
-              </div>
-            }
-          </div>
+                </div>
+              </form>
+            </div>
+          }
         </div>
       </div>
     </div>
@@ -239,7 +192,9 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     const user = this.authService.getCurrentUser();
-    this.currentUser.set(user());
+    if(user()) {
+       this.currentUser.set(user());
+    }
   }
 
   getInitials(): string {

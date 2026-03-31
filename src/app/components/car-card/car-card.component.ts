@@ -8,102 +8,98 @@ import { Car } from '../../core/models/car.model';
   standalone: true,
   imports: [CommonModule, RouterLink],
   template: `
-    <div class="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 shadow-2xl hover:shadow-2xl transition-all duration-500 h-full flex flex-col animate-fadeInUp hover:border-blue-500">
+    <div class="card p-0 overflow-hidden group hover:-translate-y-2 font-body h-full flex flex-col">
       <!-- Cinematic Overlay -->
-      <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 group-hover:opacity-60 transition-opacity duration-500 z-10"></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"></div>
 
       <!-- Image Container -->
-      <div class="relative h-48 bg-slate-900 overflow-hidden">
+      <div class="relative h-56 overflow-hidden">
         <img
           [src]="car.images[0]"
           [alt]="car.brand + ' ' + car.model"
           class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
         />
         <!-- Cinematic Gradient Overlay -->
-        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-40"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent"></div>
 
         <!-- Favorite Button -->
         <button
           (click)="toggleFavorite()"
-          class="absolute top-4 right-4 bg-slate-900/80 backdrop-blur-md rounded-full p-3 shadow-lg hover:bg-blue-600 transition-all duration-300 z-20 hover:scale-110"
-          [title]="isFavorite ? 'Remove from favorites' : 'Add to favorites'"
+          class="absolute top-4 right-4 w-10 h-10 rounded-full bg-background/80 backdrop-blur-md flex items-center justify-center border border-border/50 shadow-lg hover:bg-primary hover:text-white transition-all duration-300 z-20 hover:scale-110"
+          [title]="isFavorite ? 'إزالة من المفضلة' : 'إضافة للمفضلة'"
         >
-          <span [class.text-red-500]="isFavorite" class="text-xl">
-            {{ isFavorite ? '❤' : '🤍' }}
+          <span [class.text-primary]="isFavorite" class="text-lg group-hover:text-white">
+            {{ isFavorite ? '❤️' : '🤍' }}
           </span>
         </button>
 
         <!-- Condition Badge -->
         <div
-          [ngClass]="car.condition === 'new' ? 'bg-gradient-to-r from-green-600 to-green-500' : 'bg-gradient-to-r from-orange-600 to-orange-500'"
-          class="absolute top-4 left-4 text-white px-4 py-2 rounded-full text-xs font-bold shadow-lg z-20 backdrop-blur-sm"
+          class="absolute top-4 left-4 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest shadow-lg z-20 backdrop-blur-sm border border-white/10"
+          [class.bg-primary]="car.condition === 'new'"
+          [class.text-white]="car.condition === 'new'"
+          [class.bg-secondary]="car.condition === 'used'"
+          [class.text-foreground]="car.condition === 'used'"
         >
-          {{ car.condition | uppercase }}
+          {{ car.condition === 'new' ? 'جديد' : 'مستعمل' }}
+        </div>
+
+        <!-- Price -->
+        <div class="absolute bottom-4 left-6 z-20">
+          <div class="text-2xl font-black text-foreground font-display drop-shadow-lg">
+            {{ car.price | number }} ر.س
+          </div>
         </div>
       </div>
 
       <!-- Content -->
-      <div class="p-5 flex-1 flex flex-col relative z-10">
+      <div class="p-6 flex-1 flex flex-col relative z-10">
         <!-- Title -->
-        <h3 class="text-xl font-bold text-white mb-1 group-hover:text-blue-400 transition-colors">
+        <h3 class="text-xl font-black text-foreground mb-1 font-display group-hover:text-primary transition-colors">
           {{ car.brand }} {{ car.model }}
         </h3>
 
         <!-- Year and Mileage -->
-        <p class="text-sm text-slate-400 mb-3">
-          {{ car.year }} • {{ car.mileage | number }} miles
+        <p class="text-[10px] font-black text-muted-foreground mb-4 uppercase tracking-widest">
+           موديل {{ car.year }} • {{ car.mileage | number }} كم
         </p>
 
         <!-- Rating -->
         @if (car.rating) {
-          <div class="flex items-center gap-2 mb-3">
-            <span class="text-yellow-400 text-lg">★</span>
-            <span class="text-sm font-semibold text-white">{{ car.rating }}</span>
-            <span class="text-xs text-slate-500">({{ car.reviews }} reviews)</span>
+          <div class="flex items-center gap-2 mb-5">
+            <span class="text-primary text-xl">★</span>
+            <span class="text-sm font-black text-foreground">{{ car.rating }}</span>
+            <span class="text-[10px] text-muted-foreground font-bold mr-2">({{ car.reviews }} تقييم)</span>
           </div>
         }
 
         <!-- Specs Grid -->
-        <div class="grid grid-cols-2 gap-2 mb-4 text-xs text-slate-400">
-          <div class="bg-slate-800/50 p-2 rounded-lg">
-            <span class="text-slate-500">Fuel:</span> {{ car.fuelType }}
+        <div class="grid grid-cols-2 gap-3 mb-6">
+          <div class="bg-secondary/40 p-2.5 rounded-lg border border-border/30 flex flex-col">
+            <span class="text-[9px] font-black text-muted-foreground uppercase tracking-widest mb-1">الوقود</span>
+            <span class="text-xs font-bold text-foreground">{{ car.fuelType }}</span>
           </div>
-          <div class="bg-slate-800/50 p-2 rounded-lg">
-            <span class="text-slate-500">Trans:</span> {{ car.transmission }}
-          </div>
-          <div class="bg-slate-800/50 p-2 rounded-lg">
-            <span class="text-slate-500">Color:</span> {{ car.color }}
-          </div>
-          <div class="bg-slate-800/50 p-2 rounded-lg">
-            <span class="text-slate-500">Engine:</span> {{ car.engineSize }}
+          <div class="bg-secondary/40 p-2.5 rounded-lg border border-border/30 flex flex-col">
+            <span class="text-[9px] font-black text-muted-foreground uppercase tracking-widest mb-1">ناقل الحركة</span>
+            <span class="text-xs font-bold text-foreground">{{ car.transmission }}</span>
           </div>
         </div>
 
-        <!-- Description -->
-        <p class="text-sm text-slate-400 mb-4 line-clamp-2">
-          {{ car.description }}
-        </p>
-
-        <!-- Price and Action -->
-        <div class="mt-auto space-y-3">
-          <div class="text-3xl font-bold bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
-            $ {{ car.price | number }}
-          </div>
-          <div class="flex gap-2">
-            <button
-              [routerLink]="['/cars', car.id]"
-              class="flex-1 bg-gradient-to-r from-blue-600 to-blue-500 text-white py-2 rounded-lg hover:from-blue-500 hover:to-blue-400 transition-all duration-300 font-semibold shadow-lg hover:shadow-blue-500/50 hover:shadow-2xl"
-            >
-              View Details
-            </button>
-            <button
-              (click)="compare()"
-              class="px-4 py-2 bg-slate-700 border border-slate-600 text-white rounded-lg hover:border-blue-500 hover:bg-slate-600 transition-all duration-300"
-              title="Compare"
-            >
-              ⚖
-            </button>
-          </div>
+        <!-- Action -->
+        <div class="mt-auto flex gap-3">
+          <button
+            [routerLink]="['/cars', car.id]"
+            class="flex-1 btn btn-primary py-3 rounded-xl text-xs font-black uppercase tracking-widest shadow-glow"
+          >
+            عرض التفاصيل
+          </button>
+          <button
+            (click)="compare()"
+            class="w-12 h-12 flex items-center justify-center bg-secondary border border-border rounded-xl hover:border-primary hover:text-primary transition-all duration-300 shadow-sm"
+            title="مقارنة"
+          >
+            🔄
+          </button>
         </div>
       </div>
     </div>

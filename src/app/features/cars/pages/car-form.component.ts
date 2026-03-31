@@ -11,85 +11,85 @@ import { Car } from '../../../core/models/car.model';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterLink],
   template: `
-    <div class="container mx-auto px-4 py-12">
-      <h1 class="text-4xl font-bold mb-8">{{ isEdit() ? 'Edit Car' : 'Add New Car' }}</h1>
+    <div class="container mx-auto px-4 py-12 animate-fadeInUp">
+      <h1 class="text-4xl font-bold mb-8 gradient-text">{{ isEdit() ? 'Edit Car' : 'Add New Car' }}</h1>
 
-      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="max-w-2xl bg-white p-8 rounded-lg shadow space-y-6">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="card max-w-2xl p-8 space-y-6">
         <!-- Brand and Model -->
         <div class="grid grid-cols-2 gap-4">
-          <div>
-            <label class="block text-sm font-semibold mb-2">Brand *</label>
+          <div class="form-group">
+            <label class="block text-sm font-semibold mb-2 text-slate-300">Brand *</label>
             <input
               formControlName="brand"
               type="text"
-              class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              class="w-full input"
               required
             />
             @if (form.get('brand')?.invalid && form.get('brand')?.touched) {
-              <p class="text-red-500 text-sm mt-1">Brand is required</p>
+              <p class="text-error text-sm mt-1">Brand is required</p>
             }
           </div>
-          <div>
-            <label class="block text-sm font-semibold mb-2">Model *</label>
+          <div class="form-group">
+            <label class="block text-sm font-semibold mb-2 text-slate-300">Model *</label>
             <input
               formControlName="model"
               type="text"
-              class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              class="w-full input"
               required
             />
             @if (form.get('model')?.invalid && form.get('model')?.touched) {
-              <p class="text-red-500 text-sm mt-1">Model is required</p>
+              <p class="text-error text-sm mt-1">Model is required</p>
             }
           </div>
         </div>
 
         <!-- Year and Price -->
         <div class="grid grid-cols-2 gap-4">
-          <div>
-            <label class="block text-sm font-semibold mb-2">Year *</label>
+          <div class="form-group">
+            <label class="block text-sm font-semibold mb-2 text-slate-300">Year *</label>
             <input
               formControlName="year"
               type="number"
-              class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              class="w-full input"
               required
             />
             @if (form.get('year')?.invalid && form.get('year')?.touched) {
-              <p class="text-red-500 text-sm mt-1">Year is required</p>
+              <p class="text-error text-sm mt-1">Year is required</p>
             }
           </div>
-          <div>
-            <label class="block text-sm font-semibold mb-2">Price ($) *</label>
+          <div class="form-group">
+            <label class="block text-sm font-semibold mb-2 text-slate-300">Price ($) *</label>
             <input
               formControlName="price"
               type="number"
-              class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              class="w-full input"
               required
             />
             @if (form.get('price')?.invalid && form.get('price')?.touched) {
-              <p class="text-red-500 text-sm mt-1">Price is required</p>
+              <p class="text-error text-sm mt-1">Price is required</p>
             }
           </div>
         </div>
 
         <!-- Mileage and Condition -->
         <div class="grid grid-cols-2 gap-4">
-          <div>
-            <label class="block text-sm font-semibold mb-2">Mileage (miles) *</label>
+          <div class="form-group">
+            <label class="block text-sm font-semibold mb-2 text-slate-300">Mileage (miles) *</label>
             <input
               formControlName="mileage"
               type="number"
-              class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              class="w-full input"
               required
             />
             @if (form.get('mileage')?.invalid && form.get('mileage')?.touched) {
-              <p class="text-red-500 text-sm mt-1">Mileage is required</p>
+              <p class="text-error text-sm mt-1">Mileage is required</p>
             }
           </div>
-          <div>
-            <label class="block text-sm font-semibold mb-2">Condition *</label>
+          <div class="form-group">
+            <label class="block text-sm font-semibold mb-2 text-slate-300">Condition *</label>
             <select
               formControlName="condition"
-              class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              class="w-full input"
               required
             >
               <option value="">Select Condition</option>
@@ -97,30 +97,30 @@ import { Car } from '../../../core/models/car.model';
               <option value="used">Used</option>
             </select>
             @if (form.get('condition')?.invalid && form.get('condition')?.touched) {
-              <p class="text-red-500 text-sm mt-1">Condition is required</p>
+              <p class="text-error text-sm mt-1">Condition is required</p>
             }
           </div>
         </div>
 
         <!-- Color and Transmission -->
         <div class="grid grid-cols-2 gap-4">
-          <div>
-            <label class="block text-sm font-semibold mb-2">Color *</label>
+          <div class="form-group">
+            <label class="block text-sm font-semibold mb-2 text-slate-300">Color *</label>
             <input
               formControlName="color"
               type="text"
-              class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              class="w-full input"
               required
             />
             @if (form.get('color')?.invalid && form.get('color')?.touched) {
-              <p class="text-red-500 text-sm mt-1">Color is required</p>
+              <p class="text-error text-sm mt-1">Color is required</p>
             }
           </div>
-          <div>
-            <label class="block text-sm font-semibold mb-2">Transmission *</label>
+          <div class="form-group">
+            <label class="block text-sm font-semibold mb-2 text-slate-300">Transmission *</label>
             <select
               formControlName="transmission"
-              class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              class="w-full input"
               required
             >
               <option value="">Select Transmission</option>
@@ -128,18 +128,18 @@ import { Car } from '../../../core/models/car.model';
               <option value="Manual">Manual</option>
             </select>
             @if (form.get('transmission')?.invalid && form.get('transmission')?.touched) {
-              <p class="text-red-500 text-sm mt-1">Transmission is required</p>
+              <p class="text-error text-sm mt-1">Transmission is required</p>
             }
           </div>
         </div>
 
         <!-- Fuel Type and Engine Size -->
         <div class="grid grid-cols-2 gap-4">
-          <div>
-            <label class="block text-sm font-semibold mb-2">Fuel Type *</label>
+          <div class="form-group">
+            <label class="block text-sm font-semibold mb-2 text-slate-300">Fuel Type *</label>
             <select
               formControlName="fuelType"
-              class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              class="w-full input"
               required
             >
               <option value="">Select Fuel Type</option>
@@ -148,52 +148,52 @@ import { Car } from '../../../core/models/car.model';
               <option value="Hybrid">Hybrid</option>
             </select>
             @if (form.get('fuelType')?.invalid && form.get('fuelType')?.touched) {
-              <p class="text-red-500 text-sm mt-1">Fuel Type is required</p>
+              <p class="text-error text-sm mt-1">Fuel Type is required</p>
             }
           </div>
-          <div>
-            <label class="block text-sm font-semibold mb-2">Engine Size *</label>
+          <div class="form-group">
+            <label class="block text-sm font-semibold mb-2 text-slate-300">Engine Size *</label>
             <input
               formControlName="engineSize"
               type="text"
               placeholder="e.g., 2.0L"
-              class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              class="w-full input"
               required
             />
             @if (form.get('engineSize')?.invalid && form.get('engineSize')?.touched) {
-              <p class="text-red-500 text-sm mt-1">Engine Size is required</p>
+              <p class="text-error text-sm mt-1">Engine Size is required</p>
             }
           </div>
         </div>
 
         <!-- Description -->
-        <div>
-          <label class="block text-sm font-semibold mb-2">Description *</label>
+        <div class="form-group">
+          <label class="block text-sm font-semibold mb-2 text-slate-300">Description *</label>
           <textarea
             formControlName="description"
-            class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+            class="w-full input resize-none"
             rows="4"
             required
           ></textarea>
           @if (form.get('description')?.invalid && form.get('description')?.touched) {
-            <p class="text-red-500 text-sm mt-1">Description is required</p>
+            <p class="text-error text-sm mt-1">Description is required</p>
           }
         </div>
 
         <!-- Images -->
-        <div>
-          <label class="block text-sm font-semibold mb-2">Images (comma-separated URLs) *</label>
+        <div class="form-group">
+          <label class="block text-sm font-semibold mb-2 text-slate-300">Images (comma-separated URLs) *</label>
           <textarea
             formControlName="images"
-            class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+            class="w-full input resize-none"
             rows="3"
             placeholder="https://example.com/image1.jpg, https://example.com/image2.jpg"
             required
           ></textarea>
           @if (form.get('images')?.invalid && form.get('images')?.touched) {
-            <p class="text-red-500 text-sm mt-1">At least one image URL is required</p>
+            <p class="text-error text-sm mt-1">At least one image URL is required</p>
           }
-          <p class="text-gray-600 text-sm mt-1">Separate multiple URLs with commas</p>
+          <p class="text-slate-500 text-sm mt-1">Separate multiple URLs with commas</p>
         </div>
 
         <!-- Form Actions -->
@@ -201,20 +201,20 @@ import { Car } from '../../../core/models/car.model';
           <button
             type="submit"
             [disabled]="!form.valid || isSubmitting()"
-            class="flex-1 bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+            class="flex-1 btn btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {{ isSubmitting() ? 'Saving...' : isEdit() ? 'Update Car' : 'Add Car' }}
           </button>
           <button
             type="button"
             (click)="resetForm()"
-            class="flex-1 bg-gray-200 text-gray-800 py-3 rounded-lg font-semibold hover:bg-gray-300 transition"
+            class="flex-1 btn btn-secondary text-white border border-slate-700 hover:bg-slate-800 transition"
           >
             Reset
           </button>
           <a
             routerLink="/cars"
-            class="flex-1 text-center border-2 border-gray-300 py-3 rounded-lg font-semibold hover:bg-gray-50 transition"
+            class="flex-1 text-center btn btn-secondary flex items-center justify-center border border-slate-700 hover:bg-slate-800 text-slate-300 transition"
           >
             Cancel
           </a>
