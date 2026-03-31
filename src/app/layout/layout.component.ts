@@ -10,7 +10,7 @@ import { FooterComponent } from './footer/footer.component';
   imports: [CommonModule, RouterOutlet, HeaderComponent, FooterComponent],
   template: `
     <app-header></app-header>
-    <main class="min-h-screen bg-gray-50">
+    <main class="min-h-screen">
       <router-outlet></router-outlet>
     </main>
     <app-footer></app-footer>

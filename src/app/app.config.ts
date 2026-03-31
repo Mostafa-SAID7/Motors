@@ -1,31 +1,50 @@
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
-import { provideRouter } from '@angular/router';
-import { provideAnimations } from '@angular/platform-browser/animations';
-import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { provideRouter, withViewTransitions } from '@angular/router';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { provideHttpClient, withFetch } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
+import { MessageService, ConfirmationService } from 'primeng/api';
+import { providePrimeNG } from 'primeng/config';
+import { provideTranslateService } from '@ngx-translate/core';
+import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
+import Aura from '@primeng/themes/aura';
 
 import { routes } from './app.routes';
 
-export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
-}
+
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes),
-    provideAnimations(),
-    provideHttpClient(),
-    importProvidersFrom(
-      TranslateModule.forRoot({
-        defaultLanguage: 'en',
-        loader: {
-          provide: TranslateLoader,
-          useFactory: HttpLoaderFactory,
-          deps: [HttpClient],
+    provideRouter(routes, withViewTransitions()),
+    provideAnimationsAsync(),
+    provideHttpClient(withFetch()),
+
+    // PrimeNG configuration for v18+
+    providePrimeNG({
+      theme: {
+        preset: Aura,
+        options: {
+          darkModeSelector: '.app-dark',
+          cssLayer: {
+            name: 'primeng',
+            order: 'tailwind-base, primeng, tailwind-utilities',
+          },
         },
-      })
-    ),
+      },
+      ripple: true,
+    }),
+
+    // PrimeNG Services
+    MessageService,
+    ConfirmationService,
+
+    // Translation Services
+    provideTranslateService({
+      defaultLanguage: 'ar',
+      loader: provideTranslateHttpLoader({
+        prefix: './assets/i18n/',
+        suffix: '.json',
+      }),
+    }),
   ],
 };

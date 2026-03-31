@@ -12,6 +12,8 @@ export interface Car {
   transmission: string;
   fuelType: string;
   engineSize: string;
+  rating?: number;
+  reviews?: number;
 }
 
 export interface CarFilter {
@@ -24,4 +26,13 @@ export interface CarFilter {
   condition?: 'new' | 'used';
   color?: string;
   search?: string;
+}
+
+export interface Review {
+  id: string;
+  carId: string;
+  author: string;
+  rating: number;
+  comment: string;
+  date: Date;
 }
