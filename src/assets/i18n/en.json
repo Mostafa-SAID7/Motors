@@ -1,0 +1,48 @@
+{
+  "nav": {
+    "home": "Home",
+    "cars": "Cars",
+    "addCar": "Add Car",
+    "contact": "Contact"
+  },
+  "dashboard": {
+    "welcome": "Welcome to Motors",
+    "totalCars": "Total Cars",
+    "newCars": "New Cars",
+    "usedCars": "Used Cars",
+    "featuredCars": "Featured Cars"
+  },
+  "cars": {
+    "ourCars": "Our Cars",
+    "filters": "Filters",
+    "brand": "Brand",
+    "priceRange": "Price Range",
+    "condition": "Condition",
+    "applyFilters": "Apply Filters",
+    "viewDetails": "View Details",
+    "backToCars": "Back to Cars",
+    "specifications": "Specifications",
+    "mileage": "Mileage",
+    "transmission": "Transmission",
+    "fuelType": "Fuel Type",
+    "engineSize": "Engine Size",
+    "color": "Color",
+    "description": "Description",
+    "bookNow": "Book Now",
+    "contactSeller": "Contact Seller",
+    "editCar": "Edit Car",
+    "addNewCar": "Add New Car",
+    "year": "Year",
+    "price": "Price",
+    "images": "Images"
+  },
+  "common": {
+    "new": "New",
+    "used": "Used",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "save": "Save"
+  }
+}

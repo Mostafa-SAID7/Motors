@@ -1,0 +1,36 @@
+# This file defines code ownership and auto-assignment of PRs
+
+# Global owners
+* @owner
+
+# Documentation
+/docs/ @owner
+*.md @owner
+
+# GitHub workflows
+/.github/workflows/ @owner
+
+# Configuration files
+/angular.json @owner
+/tsconfig.json @owner
+/tailwind.config.js @owner
+/postcss.config.js @owner
+package.json @owner
+
+# Core application
+/src/app/core/ @owner
+/src/app/app.config.ts @owner
+/src/app/app.routes.ts @owner
+
+# Features
+/src/app/features/cars/ @owner
+/src/app/features/dashboard/ @owner
+
+# Layout
+/src/app/layout/ @owner
+
+# Tests
+/src/**/*.spec.ts @owner
+
+# Environment
+/src/environments/ @owner

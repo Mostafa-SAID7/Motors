@@ -1,0 +1,40 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "03:00"
+    open-pull-requests-limit: 10
+    reviewers:
+      - "owner"
+    assignees:
+      - "owner"
+    labels:
+      - "dependencies"
+      - "npm"
+    commit-message:
+      prefix: "chore"
+      prefix-scope: "deps"
+      include: "scope"
+    pull-request-branch-name:
+      separator: "/"
+    rebase-strategy: "auto"
+    allow:
+      - dependency-type: "all"
+    ignore:
+      - dependency-name: "angular"
+        versions: ["0.x"]
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "03:00"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "owner"
+    labels:
+      - "github-actions"

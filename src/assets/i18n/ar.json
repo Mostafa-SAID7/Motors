@@ -1,0 +1,48 @@
+{
+  "nav": {
+    "home": "الرئيسية",
+    "cars": "السيارات",
+    "addCar": "إضافة سيارة",
+    "contact": "اتصل بنا"
+  },
+  "dashboard": {
+    "welcome": "مرحبا بك في موتورز",
+    "totalCars": "إجمالي السيارات",
+    "newCars": "سيارات جديدة",
+    "usedCars": "سيارات مستعملة",
+    "featuredCars": "السيارات المميزة"
+  },
+  "cars": {
+    "ourCars": "سياراتنا",
+    "filters": "الفلاتر",
+    "brand": "الماركة",
+    "priceRange": "نطاق السعر",
+    "condition": "الحالة",
+    "applyFilters": "تطبيق الفلاتر",
+    "viewDetails": "عرض التفاصيل",
+    "backToCars": "العودة للسيارات",
+    "specifications": "المواصفات",
+    "mileage": "المسافة المقطوعة",
+    "transmission": "ناقل الحركة",
+    "fuelType": "نوع الوقود",
+    "engineSize": "حجم المحرك",
+    "color": "اللون",
+    "description": "الوصف",
+    "bookNow": "احجز الآن",
+    "contactSeller": "اتصل بالبائع",
+    "editCar": "تعديل السيارة",
+    "addNewCar": "إضافة سيارة جديدة",
+    "year": "السنة",
+    "price": "السعر",
+    "images": "الصور"
+  },
+  "common": {
+    "new": "جديد",
+    "used": "مستعمل",
+    "submit": "إرسال",
+    "cancel": "إلغاء",
+    "edit": "تعديل",
+    "delete": "حذف",
+    "save": "حفظ"
+  }
+}
